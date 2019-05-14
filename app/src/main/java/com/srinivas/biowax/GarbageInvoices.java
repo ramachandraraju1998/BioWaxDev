@@ -175,4 +175,13 @@ public class GarbageInvoices extends Activity {
     }
 
 
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.myimage:
+                finish();
+                break;
+        }
+    }
+
+
 }

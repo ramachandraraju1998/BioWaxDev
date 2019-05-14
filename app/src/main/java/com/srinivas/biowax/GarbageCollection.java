@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -45,7 +46,7 @@ public class GarbageCollection extends Activity implements View.OnClickListener 
     TextView latitude_tv, longitude_tv;
     ImageView myimage;
     ProgressDialog pd;
-
+    SearchView svOutletNameAddress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +56,8 @@ public class GarbageCollection extends Activity implements View.OnClickListener 
         myimage.setOnClickListener(this);
         hospitalb_rv.setLayoutManager(new LinearLayoutManager(this));
         longitude_tv = findViewById(R.id.longitude_tv);
+        svOutletNameAddress = (SearchView) findViewById(R.id.svOutletNameAddress);
+
         latitude_tv = findViewById(R.id.latitude_tv);
         pd = new ProgressDialog(GarbageCollection.this);
         pd.setMessage("Fetching Garbage History..");
@@ -104,11 +107,33 @@ public class GarbageCollection extends Activity implements View.OnClickListener 
         }, 3000);
 */
 
+
+
         try {
             getRoutes();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        svOutletNameAddress.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                hospitals_adapter.filteraddress(newText.toString());
+
+
+                // rla.filteraddress(newText.toString());
+                return false;
+
+            }
+        });
+
+
     }
 
     @Override

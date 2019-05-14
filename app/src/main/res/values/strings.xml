@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Biowax</string>
+    <string name="app_name">BiowaxDev</string>
 
     <string name="no_network_title">No Internet Connection</string>
     <string name="no_network_msg">Make sure you are connected to a WiFi or a mobile network and try again.</string>

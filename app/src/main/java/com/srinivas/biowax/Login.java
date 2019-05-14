@@ -6,12 +6,14 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -131,10 +133,10 @@ public class Login extends Activity implements View.OnClickListener {
 
 
         RequestBody formBody = new FormBody.Builder()
-                 .add("mobile_imei_number", "865687032199968")
-                //.add("mobile_imei_number", imenumber1.toString())
-                .add("password", "test@123")
-                //.add("password", password_et.getText().toString())
+                //  .add("mobile_imei_number", "865687032199968")
+                 .add("mobile_imei_number", imenumber1.toString())
+                 //.add("password", "test@123")
+                  .add("password", password_et.getText().toString())
                 /*.add("UserEmail", email_et.getText().toString())
                 .add("password", password_tv.getText().toString())*/
                 .build();
@@ -190,27 +192,48 @@ public class Login extends Activity implements View.OnClickListener {
                         if (obj.getString("status").equals("true")) {
                             System.out.println("JONDDDd " + obj.toString());
                             JSONObject user = obj.getJSONObject("user");
-                            JSONObject routes_masters_driver = user.getJSONObject("routes_masters_driver");
-                            String driverid = routes_masters_driver.getString("id");
 
-                            String truck_id = routes_masters_driver.getString("truck_id");
 
-                            SharedPreferences.Editor ss = getSharedPreferences("Login", MODE_PRIVATE).edit();
-                            ss.putString("type",user.getString("employee_type"));
-                            ss.putString("type",user.getString("employee_type"));
-                            ss.putString("user_id",user.getString("user_id"));
-                            ss.putString("access_token", obj.getString("access_token"));
-                            ss.putString("driverid", driverid);
-                            ss.putString("truck_id", truck_id);
-                            ss.putString("data", obj.toString());
-                            ss.commit();
+                            if(user.getString("routes_masters_driver")=="null") {
 
-                            if (user.getString("employee_type").equals("Driver")){
-                                Intent dashboard = new Intent(Login.this, Dashboard_Agent.class);
-                                startActivity(dashboard);
-                            }else {
-                                Intent dashboard = new Intent(Login.this, Dashboard.class);
-                                startActivity(dashboard);
+                                Login.this.login_btn.post(new Runnable() {
+                                    public void run() {
+                                        showDialog(Login.this, "No Route Is Assigned", "true");
+                                    }
+                                });
+
+
+                            }else{
+                                JSONObject routes_masters_driver = user.getJSONObject("routes_masters_driver");
+                                String driverid = routes_masters_driver.getString("id");
+
+                                String truck_id = routes_masters_driver.getString("truck_id");
+                                JSONObject userdetails =user.getJSONObject("user");
+
+
+                                SharedPreferences.Editor ss = getSharedPreferences("Login", MODE_PRIVATE).edit();
+                                ss.putString("type", user.getString("employee_type"));
+                                ss.putString("type", user.getString("employee_type"));
+                                ss.putString("user_id", user.getString("user_id"));
+                                ss.putString("access_token", obj.getString("access_token"));
+
+                                ss.putString("driverid", driverid);
+                                ss.putString("truck_id", truck_id);
+                                ss.putString("routeid", routes_masters_driver.getString("route_number"));
+                                ss.putString("data", obj.toString());
+                                ss.putString("role_name",userdetails.getString("role_name"));
+                                ss.commit();
+
+
+                                if (user.getString("employee_type").equals("Driver")) {
+
+                                    Intent dashboard = new Intent(Login.this, Dashboard_Agent.class);
+                                    startActivity(dashboard);
+                                } else {
+
+                                    Intent dashboard = new Intent(Login.this, Dashboard.class);
+                                    startActivity(dashboard);
+                                }
                             }
 
                         } else {
@@ -227,7 +250,15 @@ public class Login extends Activity implements View.OnClickListener {
 
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        Toast.makeText(getBaseContext(), "IMEI Number or password doesnt exist", Toast.LENGTH_SHORT).show();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                 // Stuff that updates the UI
+                                Toast.makeText(getBaseContext(), "IMEI Number or password doesnt exist", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
                     }
                 }
             }
@@ -312,7 +343,7 @@ public class Login extends Activity implements View.OnClickListener {
                         for (int i = 0; i < records.length(); i++) {
                             JSONObject res = records.getJSONObject(i);
                             System.out.println(res.toString());
-                            if (res.getString("Facultyid").equals("admin")) {
+                            if (res.getString("Facultyid").equals("admin2")) {
                                 result = true;
                                 break;
                             } else {
@@ -354,6 +385,23 @@ public class Login extends Activity implements View.OnClickListener {
             }
         });
 
+    }
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+
+                .setMessage("Do you want to Exit ")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        System.exit(1);
+
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
 }

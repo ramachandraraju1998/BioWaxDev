@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.srinivas.Driver.Agentdetails;
+import com.srinivas.PrintBt.FirstActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -105,7 +106,7 @@ public class Dashboard_Agent extends Activity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.garbage_ll:
                 vibrate();
-                Intent garbagecollection = new Intent(Dashboard_Agent.this, GarbageCollection.class);
+                Intent garbagecollection = new Intent(Dashboard_Agent.this,GarbageCollection.class);
                 startActivity(garbagecollection);
                 break;
             case R.id.history_ll:
@@ -126,7 +127,8 @@ public class Dashboard_Agent extends Activity implements View.OnClickListener {
                 break;
             case R.id.receipt_ll:
                 vibrate();
-                Intent invoices = new Intent(Dashboard_Agent.this, GarbageInvoices.class);
+                //GarbageInvoices
+                Intent invoices = new Intent(Dashboard_Agent.this, FirstActivity.class);
                 startActivity(invoices);
                 break;
             case R.id.logout_ll:

@@ -44,7 +44,7 @@ public class Dashboard extends Activity implements View.OnClickListener {
         history_ll = findViewById(R.id.history_ll);
         mapview_ll = findViewById(R.id.mapview_ll);
         driverinfo_ll = findViewById(R.id.driverinfo_ll);
-        receipt_ll = findViewById(R.id.receipt_ll);
+        receipt_ll =    findViewById(R.id.receipt_ll);
         logout_ll = findViewById(R.id.logout_ll);
 
         garbage_ll.setOnClickListener(this);

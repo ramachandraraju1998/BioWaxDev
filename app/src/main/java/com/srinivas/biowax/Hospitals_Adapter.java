@@ -15,12 +15,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class Hospitals_Adapter extends RecyclerView.Adapter<Hospitals_Adapter.Hospital> {
     String confirm = "no";
-    ArrayList<Hospitals> hospitals;
+    ArrayList<Hospitals> hospitals,hospitalsfl;
     int Rowlayout;
     Context context;
 
@@ -28,6 +29,7 @@ public class Hospitals_Adapter extends RecyclerView.Adapter<Hospitals_Adapter.Ho
         this.context = applicationContext;
         this.Rowlayout = check_single;
         this.hospitals = hospitals;
+        this.hospitalsfl = hospitals;
     }
 
     @NonNull
@@ -77,6 +79,27 @@ public class Hospitals_Adapter extends RecyclerView.Adapter<Hospitals_Adapter.Ho
             }
         });
     }
+    public void filteraddress(String charText) {
+        charText = charText.toUpperCase(Locale.getDefault());
+        // charText = charText.toUpperCase();
+        // dealerses.clear();
+        if (charText.length() == 0) {
+            hospitals = hospitalsfl;
+        } else {
+            ArrayList<Hospitals> filteredList = new ArrayList<>();
+            for (Hospitals androidVersion : hospitalsfl) {
+                //  Toast.makeText(context,charText.toString(),Toast.LENGTH_SHORT).show();
+
+                if (androidVersion.getH_name().toString().toLowerCase().contains(charText.toLowerCase())) {
+                    filteredList.add(androidVersion);
+                }
+
+            }
+            hospitals = filteredList;
+        }
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public int getItemCount() {

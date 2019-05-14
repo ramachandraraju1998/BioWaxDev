@@ -19,11 +19,11 @@
             android:src="@drawable/back" />
 
         <TextView
+            android:id="@+id/role"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="50dp"
             android:gravity="center"
-            android:text="Collection Agent Details"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -54,7 +54,8 @@
             android:inputType="text"
             android:paddingLeft="10dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/black" />
+            android:textColorHint="@color/black"
+            android:focusable="false"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -74,7 +75,8 @@
             android:inputType="text"
             android:paddingLeft="10dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/black" />
+            android:textColorHint="@color/black"
+            android:focusable="false"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -94,7 +96,8 @@
             android:inputType="text"
             android:paddingLeft="10dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/black" />
+            android:textColorHint="@color/black"
+            android:focusable="false"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -114,7 +117,8 @@
             android:inputType="text"
             android:paddingLeft="10dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/black" />
+            android:textColorHint="@color/black"
+            android:focusable="false"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -135,7 +139,8 @@
             android:paddingLeft="10dp"
             android:text=""
             android:textColor="@color/black"
-            android:textColorHint="@color/black" />
+            android:textColorHint="@color/black"
+            android:focusable="false"/>
     </android.support.design.widget.TextInputLayout>
 
 </LinearLayout>

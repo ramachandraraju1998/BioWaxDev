@@ -129,7 +129,7 @@ public class Biowastageform extends Activity implements View.OnClickListener {
             logiitude = String.valueOf(gps.getLongitude());
             // Toast.makeText(getBaseContext(),latitude+" "+longitude  ,Toast.LENGTH_SHORT).show();
         }
-        showcase_attendance("Confirmation For Wastage", "Did you found wastage " + " \n If YES click on OK");
+      //  showcase_attendance("Confirmation For Wastage", "Did you found wastage " + " \n If YES click on OK");
 
 
     }
@@ -271,6 +271,9 @@ public class Biowastageform extends Activity implements View.OnClickListener {
                         pd.setCancelable(false);
                         pd.show();
                         getBarcodeDetails(barcodeNumber.getText().toString());
+
+
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
