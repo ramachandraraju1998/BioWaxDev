@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/linearlayout"
-
+        android:visibility="gone"
         >
 
     <TextView
@@ -35,7 +35,10 @@
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="18dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/hspname"
+        android:layout_marginTop="20dp"
+      />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="   InvDate            |   InvMonth  |   InvAmt  | PaidAmt |   Total     "
+        android:text="   Inv.Date            |   InvMonth  |   InvAmt  | PaidAmt |   Total     "
         android:textSize="13dp"
         android:textStyle="bold" />
     <TextView
@@ -69,23 +72,23 @@
         android:text=""
         android:textSize="14dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="end"
-        android:text="- - - - - - - - - - - - - - -  - - - - -  - - - - - - - - - - - - - " />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="end"
+            android:text=" - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - -  - - - - - - - - - - - - - - " />
 
-    <TextView
-        android:id="@+id/netweight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="Total Amount"
-        android:textSize="18dp"
-        android:layout_marginBottom="50dp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/netweight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="50dp"
+            android:gravity="center"
+            android:text="Total Amount"
+            android:textSize="18dp"
+            android:textStyle="bold" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -97,21 +100,59 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="5dp"
         android:id="@+id/balamount"
+        android:maxLength="16"
+        android:layout_marginTop="4dp"
        />
 
         <Button
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
             android:text="Pay"
+            android:layout_marginRight="10dp"
+            android:background="@color/blue"
             android:id="@+id/pay"/>
 
 
     </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Balance = 0"
+            android:textSize="10dp"
+            android:layout_marginLeft="23dp"
+            android:fontFamily="sans-serif-light"
+            android:id="@+id/balence"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="success"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textColor=" #00ff00"
+            android:textStyle="bold"
+            android:shadowRadius="5"
+            android:shadowColor="@color/black"
+            android:textSize="20dp"
+            android:id="@+id/success"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/printimage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="50dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/print"
+            android:visibility="gone"
+
+            />
     </LinearLayout>
     </ScrollView>
 </LinearLayout>
