@@ -124,12 +124,16 @@
             android:id="@+id/svOutletNameAddress"
             android:layout_width="match_parent"
             android:layout_height="45dp"
+
             android:layout_marginLeft="12dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="12dp"
             android:background="@drawable/border">
 
         </SearchView>
+
+
+
 
         <TextView
             android:layout_width="match_parent"
@@ -141,13 +145,29 @@
             android:textStyle="bold"
             android:visibility="gone" />
 
+            <TextView
+                android:id="@+id/emptyview"
+                android:layout_marginTop="150dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:text="No SEARCH DATA FOUND"
+                android:fontFamily="sans-serif-light"
+                android:layout_marginLeft="120dp"
+
+                android:visibility="gone"
+                />
+
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/hospitalb_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="25dp">
 
+
         </android.support.v7.widget.RecyclerView>
+
     </LinearLayout>
     <!--  </ScrollView>-->
 

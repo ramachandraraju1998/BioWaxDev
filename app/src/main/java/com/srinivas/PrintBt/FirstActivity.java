@@ -77,12 +77,6 @@ public class FirstActivity extends Activity implements Runnable {
 
 
 
-
-
-
-
-
-
         mPrint = (Button) findViewById(R.id.mPrint);
         mPrint.setOnClickListener(new View.OnClickListener() {
             public void onClick(View mView) {

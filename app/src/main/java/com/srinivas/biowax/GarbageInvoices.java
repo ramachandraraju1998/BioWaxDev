@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
-public class GarbageInvoices extends Activity {
+public class GarbageInvoices extends Activity implements View.OnClickListener {
     RecyclerView hospitalb_rv;
     ProgressDialog pd;
     ArrayList<Invoice> invoices;
@@ -36,6 +36,7 @@ public class GarbageInvoices extends Activity {
     Handler handler;
     private Runnable mRunnable;
     TextView latitude_tv, longitude_tv;
+    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class GarbageInvoices extends Activity {
         hospitalb_rv.setLayoutManager(new LinearLayoutManager(this));
         longitude_tv = findViewById(R.id.longitude_tv);
         latitude_tv = findViewById(R.id.latitude_tv);
-
+back=findViewById(R.id.back);
         invoices = new ArrayList<Invoice>();
         invoicesadapter = new Invoices_Adapter(invoices, R.layout.invoices_single, getApplicationContext());
         hospitalb_rv.setAdapter(invoicesadapter);
@@ -177,7 +178,7 @@ public class GarbageInvoices extends Activity {
 
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.myimage:
+            case R.id.back:
                 finish();
                 break;
         }

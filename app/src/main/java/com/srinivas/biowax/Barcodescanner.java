@@ -62,18 +62,20 @@ public class Barcodescanner extends AppCompatActivity implements ZBarScannerView
         // Do something with the result here
         Log.v("kkkk", result.getContents()); // Prints scan results
         Log.v("uuuu", result.getBarcodeFormat().getName()); // Prints the scan format (qrcode, pdf417 etc.)
-     res=result.getContents();
+     //res=result.getContents();
         pd = new ProgressDialog(Barcodescanner.this);
         pd.setMessage("Searching the Barcode..");
         pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         pd.setIndeterminate(true);
         pd.setCancelable(false);
+        pd.dismiss();
         pd.show();
 
 
 
 
             Biowastageform.barcodeNumber.setText(result.getContents());
+        pd.dismiss();
             onBackPressed();
 
         // If you would like to resume scanning, call this method below:

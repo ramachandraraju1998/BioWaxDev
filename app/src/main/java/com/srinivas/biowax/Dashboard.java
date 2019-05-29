@@ -69,7 +69,7 @@ public class Dashboard extends Activity implements View.OnClickListener {
                     android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION,
                     android.Manifest.permission.ACCESS_NETWORK_STATE}, 0);
         } else {
-            Toast.makeText(getBaseContext(), "Else Part partd", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getBaseContext(), "Else Part partd", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -113,7 +113,8 @@ public class Dashboard extends Activity implements View.OnClickListener {
                 break;
             case R.id.history_ll:
                 vibrate();
-                Intent garbageHistory = new Intent(Dashboard.this, GarbageHistory.class);
+                //GarbageHistory.class
+                Intent garbageHistory = new Intent(Dashboard.this, collectioRecipts.class);
                 startActivity(garbageHistory);
                 break;
             case R.id.mapview_ll:
@@ -198,6 +199,7 @@ public class Dashboard extends Activity implements View.OnClickListener {
                             System.out.println("JONDDDd " + obj.getString("token"));
 
                          }
+
 
 
                     } catch (JSONException e) {

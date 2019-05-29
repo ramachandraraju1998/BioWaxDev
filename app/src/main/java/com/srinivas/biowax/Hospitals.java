@@ -5,6 +5,7 @@ public class Hospitals {
     Double h_lat,h_long;
 
     public Hospitals(String hcf_id,String h_name, String h_code, Double h_lat, Double h_long, String h_address,String route_name,String mobile) {
+        this.hcf_id=hcf_id;
         this.h_name = h_name;
         this.h_code = h_code;
         this.h_lat = h_lat;

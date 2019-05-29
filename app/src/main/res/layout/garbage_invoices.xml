@@ -13,9 +13,12 @@
         android:layout_height="50dp">
 
         <ImageView
+            android:id="@+id/back"
             android:layout_width="50dp"
             android:layout_height="45dp"
-            android:src="@drawable/back" />
+            android:src="@drawable/back"
+            android:onClick="onClick"
+            android:clickable="true"/>
 
         <TextView
             android:layout_width="match_parent"

@@ -13,14 +13,17 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +32,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,7 +84,7 @@ public class Biowastageform extends Activity implements View.OnClickListener {
     public EditText approved_by;
     ProgressDialog pd;
     public EditText bag_weight_in_hcf;
-    public EditText is_manual_input;
+   // public EditText is_manual_input;
     public EditText hcf_authorized_person_name;
     String hcf_master_id, truckid, route_master_id, routes_masters_driver_id, cover_id, clicked = "not", pic = "null", confirm = "no";
     File otherImagefile2 = null;
@@ -87,12 +92,23 @@ public class Biowastageform extends Activity implements View.OnClickListener {
     int O_IMAGE2 = 2;
     CheckBox saveandcontinue;
     GPSTracker gps;
-    String latitude, logiitude;
-    TextView completed_tv;
+    String latitude="0", logiitude="0" +
+            "";
+  //  TextView completed_tv;
     // private PeopleTrackerService service;
     ProgressDialog progress;
     int aNumber = 0;
-
+   static String check="No";
+RadioGroup radiogp;
+RadioButton yes,no;
+    String encodedImage = "null";
+    int ch=0;
+Bitmap bitmap=null;
+    int selectedId;
+    RadioButton radioButton;
+    SharedPreferences sstruck;
+    //   File myDir ;
+    String stringImage="No Image";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,11 +116,11 @@ public class Biowastageform extends Activity implements View.OnClickListener {
         saveandcontinue = findViewById(R.id.saveandcontinue);
         scanning_qrcode = findViewById(R.id.scanning_qrcode);
         scanning_qrcode.setOnClickListener(this);
-        completed_tv = findViewById(R.id.completed_tv);
-        completed_tv.setOnClickListener(this);
+       // completed_tv = findViewById(R.id.completed_tv);
+       // completed_tv.setOnClickListener(this);
         waste_image = findViewById(R.id.waste_image);
         waste_image.setOnClickListener(this);
-        is_manual_input = findViewById(R.id.is_manual_input);
+      //  is_manual_input = findViewById(R.id.is_manual_input);
         hcf_authorized_person_name = findViewById(R.id.hcf_authorized_person_name);
         approved_by = findViewById(R.id.approved_by);
         bag_weight_in_hcf = findViewById(R.id.bag_weight_in_hcf);
@@ -120,6 +136,21 @@ public class Biowastageform extends Activity implements View.OnClickListener {
         Latitude = findViewById(R.id.Latitude);
         driver_id = findViewById(R.id.driver_id);
 
+        radiogp=findViewById(R.id.radiogp);
+yes=findViewById(R.id.yes);
+no=findViewById(R.id.no);
+        barcodeNumber.setLongClickable(false);
+        cover_color_id.setLongClickable(false);
+
+
+       // file = new File(encodedImage);
+
+
+
+       //   Toast.makeText(Biowastageform.this,getIntent().getStringExtra("hcf_id"),Toast.LENGTH_LONG).show();
+           // Log.d("hcfid=", hcid);
+
+
         gps = new GPSTracker(this);
         if (!gps.isGPSEnabled && !gps.isNetworkEnabled) {
             Log.d("networkd", "false");
@@ -129,23 +160,49 @@ public class Biowastageform extends Activity implements View.OnClickListener {
             logiitude = String.valueOf(gps.getLongitude());
             // Toast.makeText(getBaseContext(),latitude+" "+longitude  ,Toast.LENGTH_SHORT).show();
         }
-      //  showcase_attendance("Confirmation For Wastage", "Did you found wastage " + " \n If YES click on OK");
+       showcase_attendance("Confirmation For Wastage", "Did you found wastage " + " \n If YES click on OK");
+        sstruck = getSharedPreferences("Login", MODE_PRIVATE);
+        hcf_authorized_person_name.setText(sstruck.getString("employee_name",""));
 
+        radiogp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.yes:
+                        // do operations specific to this selection
 
+waste_image.setVisibility(View.VISIBLE);
+
+check="yes";
+                      //  Toast.makeText(Biowastageform.this,"Yes" ,Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.no:
+                        // do operations specific to this selection
+                       // Toast.makeText(Biowastageform.this,"No" ,Toast.LENGTH_SHORT).show();
+                       // waste_image.setVisibility(View.INVISIBLE);
+                        check="No";
+
+                        waste_image.setVisibility(View.GONE);
+                        break;
+
+                }
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
             case R.id.scanning_qrcode:
                 if (Validations.hasActiveInternetConnection(Biowastageform.this)) {
                     Intent barcodescanner = new Intent(Biowastageform.this, Barcodescanner.class);
                     startActivity(barcodescanner);
                 } else {
                     cover_color_id.setText("");
-                    ;
+
                     bag_weight_in_hcf.setText("");
-                    hcf_authorized_person_name.setText("");
+                  //  hcf_authorized_person_name.setText("");
 
                     barcodeNumber.setText("");
                     barcodeNumber.getText().toString();
@@ -156,7 +213,7 @@ public class Biowastageform extends Activity implements View.OnClickListener {
 
                     System.out.println("DAd do it " + responseBody);
                     try {
-                        SharedPreferences sstruck = getSharedPreferences("Login", MODE_PRIVATE);
+                        //SharedPreferences sstruck = getSharedPreferences("Login", MODE_PRIVATE);
 
                         truckid = sstruck.getString("truck_id", "");
                         JSONObject obj = new JSONObject(responseBody);
@@ -214,43 +271,34 @@ public class Biowastageform extends Activity implements View.OnClickListener {
 
             case R.id.waste_image:
 
-                clicked = "clicked";
-                pic = "clicked";
-                String root = Environment.getExternalStorageDirectory().toString();
-                File myDir = new File(root + "/RecceImages/");
-                myDir.mkdirs();
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                otherImagefile2 = new File(myDir,
-                        String.valueOf(System.currentTimeMillis()) + ".jpg");
-                iv_url2 = FileProvider.getUriForFile(getApplicationContext(),
-                        getApplication().getPackageName() + ".provider", otherImagefile2);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, iv_url2);
-                startActivityForResult(intent, O_IMAGE2);
+                selectImage();
 
-               /* try {
-                    uploadWasteform();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
                 break;
             case R.id.myimage_back:
                 finish();
                 break;
             case R.id.done_img:
-
+//                hcf_authorized_person_name.getText().toString() =="Authorized Person Name" || TextUtils.isEmpty(hcf_authorized_person_name.getText().toString())||   hcf_authorized_person_name.getText().toString().matches(" ") || hcf_authorized_person_name.equals("") ||
+//                        hcf_authorized_person_name.length()==0 || hcf_authorized_person_name==null
                 if (bag_weight_in_hcf.getText().toString().length() == 0) {
                     showcase2("Form Alert", "Please Enter Weight should not be null ");
+                }else if( TextUtils.isEmpty(hcf_authorized_person_name.getText().toString()) || hcf_authorized_person_name.equals("")  ){
+                    showcase2("Form Alert", "Please Enter Authorized Person Name");
                 } else {
+                selectedId = radiogp .getCheckedRadioButtonId();
+                  radioButton = (RadioButton) findViewById(selectedId);
                     done();
-                    Toast.makeText(getBaseContext(), "Successfully Record inserted", Toast.LENGTH_SHORT).show();
+
+                  //  Toast.makeText(getBaseContext(), "Successfully Record inserted", Toast.LENGTH_SHORT).show();
                 }
 
                 break;
-            case R.id.completed_tv:
-                Intent garbagehistory = new Intent(Biowastageform.this, GarbageHistory.class);
-                startActivity(garbagehistory);
-                finish();
-                break;
+//            case R.id.completed_tv:
+//                Intent garbagehistory = new Intent(Biowastageform.this, GarbageHistory.class);
+//                startActivity(garbagehistory);
+//                finish();
+
+
         }
     }
 
@@ -295,21 +343,30 @@ public class Biowastageform extends Activity implements View.OnClickListener {
 
        /* barcodeNumber.setText("BARCODE-87");
         cover_color_id.setText("2");*/
-        Toast.makeText(getBaseContext(), "Dadi Restart here ", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getBaseContext(), "Dadi Restart here ", Toast.LENGTH_SHORT).show();
+
     }
 
     public void done() {
         System.out.println("weight " + bag_weight_in_hcf.getText().toString());
-        if (bag_weight_in_hcf.getText().equals("0")) {
-            showcase2("Form Alert", "Weight should not be null value");
+        if (bag_weight_in_hcf.getText().toString().equals("0")) {
+            showcase2("Form Alert", "Weight should not be 0 or null");
         } else if (cover_color_id.getText().toString().length() == 0) {
-            showcase2("Form Alert", "Barcode not found in server");
-        } else {
+            showcase2("Form Alert", "Barcode not found in server or color should not be empty");
+        } else if(TextUtils.isEmpty(hcf_authorized_person_name.getText().toString()) || hcf_authorized_person_name.equals("")){
+            showcase2("Form Alert", "Enter Authrized Name");
+        }
+        else if(yes.isChecked() || no.isChecked())
+        {
             try {
                 uploadWasteform();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+        }else{
+
+            showcase2("Form Alert", "please select yes or no in sagrigation image");
 
         }
 /*        if (clicked.equals("not")) {
@@ -479,9 +536,11 @@ public class Biowastageform extends Activity implements View.OnClickListener {
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         final String formattedDate = df.format(c);
-
-
+//        if(radioButton.getText().toString()=="yes") {
+//            stringImage = imageToString(bitmap);
+//        }
         RequestBody formBody = new FormBody.Builder()
+                .add("check_flag", String.valueOf(ch))
                 .add("hcf_master_id", hcf_master_id)
                 .add("waste_collection_date", formattedDate)
                 .add("truck_id", truckid)
@@ -493,12 +552,12 @@ public class Biowastageform extends Activity implements View.OnClickListener {
                 .add("bag_weight_in_hcf", bag_weight_in_hcf.getText().toString())
                 .add("longitude", latitude)
                 .add("latitude", logiitude)
-                .add("is_manual_input", is_manual_input.getText().toString())
+                .add("is_manual_input", "Yes")
                 .add("hcf_authorized_person_name", hcf_authorized_person_name.getText().toString())
                 .add("driver_id", "1")
-                .add("driver_imei_number", "123456789")
-                .add("is_sagregation_completed", "no")
-                .add("sagregation_image", "")
+                .add("driver_imei_number", ss.getString("imei",""))
+                .add("is_sagregation_completed",radioButton.getText().toString())
+                .add("sagregation_image", imageToString(bitmap))
                 .build();
 
         System.out.println("Dadi hcf_master_id " + hcf_master_id + " waste_collection_date " + formattedDate + " truck_id " + truckid +
@@ -506,7 +565,7 @@ public class Biowastageform extends Activity implements View.OnClickListener {
                 + " isapproved required " +
                 is_approval_required.getText().toString() + " approvedby " + approved_by + " bagweight " + bag_weight_in_hcf.getText().toString()
                 + " latitude " + latitude + " longi " + logiitude
-                + " Ismanual " + is_manual_input.getText().toString() + " hcfauthorized " + hcf_authorized_person_name.getText().toString() + " driverid = 1");
+                + " Ismanual =yes"  + " hcfauthorized " + hcf_authorized_person_name.getText().toString() + " driverid = 1");
         Request request = new Request.Builder()
                 .header("Accept", "application/json")
                 .header("Content-Type", "application/json")
@@ -547,28 +606,30 @@ public class Biowastageform extends Activity implements View.OnClickListener {
                                 System.out.println("JONDDDd " + obj.toString());
                                 Biowastageform.this.scanning_qrcode.post(new Runnable() {
                                     public void run() {
-                                        aNumber = (int) ((Math.random() * 9000000) + 1000000);
+                                        //aNumber = (int) ((Math.random() * 9000000) + 1000000);
                                         SharedPreferences.Editor trans = getSharedPreferences("Transaction", MODE_PRIVATE).edit();
                                         SharedPreferences ss = getSharedPreferences("Transaction", MODE_PRIVATE);
                                         System.out.println("Hoooo " + ss.getString("trans", ""));
                                         if (saveandcontinue.isChecked()) {
 
-                                            if (!ss.getString("trans", "").equals("")) {
-
-                                            } else {
-                                                trans.putString("trans", String.valueOf(aNumber));
-                                                trans.commit();
-                                            }
+//                                            if (!ss.getString("trans", "").equals("")) {
+//
+//                                            } else {
+//                                                trans.putString("trans", String.valueOf(aNumber));
+//                                                trans.commit();
+//                                            }
+                                            ch=1;
                                         } else {
-                                            trans.putString("trans", String.valueOf(aNumber));
-                                            trans.commit();
+//                                            trans.putString("trans", String.valueOf(aNumber));
+//                                            trans.commit();
+                                            ch=0;
                                         }
                                         DBHelper dbHelper = new DBHelper(Biowastageform.this);
                                         dbHelper.insertProject(latitude, logiitude, hcf_master_id, formattedDate, truckid, route_master_id, barcodeNumber.getText().toString()
                                                 , cover_color_id.getText().toString(),
                                                 is_approval_required.getText().toString()
                                                 , approved_by.getText().toString(), bag_weight_in_hcf.getText().toString()
-                                                , is_manual_input.getText().toString(), hcf_authorized_person_name.getText().toString()
+                                                , "Yes", hcf_authorized_person_name.getText().toString()
                                                 , driver_id.getText().toString(),
                                                 "asdf", "asdf",
                                                 ss.getString("trans", ""), "online", Biowastageform.this);
@@ -581,11 +642,28 @@ public class Biowastageform extends Activity implements View.OnClickListener {
                                                 cover_color_id.setText("");
                                                 bag_weight_in_hcf.setText("");
                                                 hcf_authorized_person_name.setText("");
-                                                // Stuff that updates the UI
 
+                                                String uri = "@drawable/cam";  // where myresource (without the extension) is the file
+
+                                                int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+
+                                                //imageview= (ImageView)findViewById(R.id.imageView);
+                                                Drawable res = getResources().getDrawable(imageResource);
+                                                waste_image.setImageDrawable(res);
+                                                //yes.setChecked(false);
+
+                                              //  waste_image.setImageDrawable(R.drawable.cam);
+
+                                                // Stuff that updates the UI
                                             }
                                         });
                                         showDialog(Biowastageform.this, "Sucessfully uploaded..", "true");
+                                        if(saveandcontinue.isChecked()){
+
+                                        }else
+                                        {
+                                            finish();
+                                        }
                                     }
                                 });
 
@@ -596,8 +674,10 @@ public class Biowastageform extends Activity implements View.OnClickListener {
 
                                         cover_color_id.setText("");
                                         bag_weight_in_hcf.setText("");
-                                        hcf_authorized_person_name.setText("");
+                                      //  hcf_authorized_person_name.setText("");
+
                                         // Stuff that updates the UI
+
 
                                     }
                                 });
@@ -609,7 +689,7 @@ public class Biowastageform extends Activity implements View.OnClickListener {
                                         , cover_color_id.getText().toString(),
                                         is_approval_required.getText().toString()
                                         , approved_by.getText().toString(), bag_weight_in_hcf.getText().toString()
-                                        , is_manual_input.getText().toString(), hcf_authorized_person_name.getText().toString()
+                                        , "Yes", hcf_authorized_person_name.getText().toString()
                                         , driver_id.getText().toString(),
                                         "asdf", "asdf",
                                         ss.getString("trans", ""), "local", Biowastageform.this);
@@ -653,7 +733,7 @@ public class Biowastageform extends Activity implements View.OnClickListener {
                     , cover_color_id.getText().toString(),
                     is_approval_required.getText().toString()
                     , approved_by.getText().toString(), bag_weight_in_hcf.getText().toString()
-                    , is_manual_input.getText().toString(), hcf_authorized_person_name.getText().toString()
+                    , "Yes", hcf_authorized_person_name.getText().toString()
                     , driver_id.getText().toString(),
                     "asdf", "asdf",
                     ss.getString("trans", ""), "local", Biowastageform.this);
@@ -735,7 +815,7 @@ public class Biowastageform extends Activity implements View.OnClickListener {
                 .header("Accept", "application/json")
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Bearer" + ss.getString("access_token", ""))
-                .url("http://175.101.151.121:8002/api/barcodedetails/" + barcodeno)
+                .url("http://175.101.151.121:8002/api/barcodedetails/"+barcodeno+"/"+getIntent().getStringExtra("hcf_id"))
                 .get()
                 .build();
 
@@ -835,9 +915,18 @@ public class Biowastageform extends Activity implements View.OnClickListener {
 
 
                         } else {
+
                             Biowastageform.this.runOnUiThread(new Runnable() {
                                 public void run() {
-                                    showcase2("Barcode Alert", "Already Scanned Barcode");
+                                    barcodeNumber.setText("");
+                                    cover_color_id.setText("");
+                                    //Toast.makeText(Biowastageform.this,"UnKnown scanned",Toast.LENGTH_SHORT).show();
+                                    try {
+                                        showcase2("Barcode Alert", obj.getString("message"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
                                 }
                             });
 
@@ -856,59 +945,67 @@ public class Biowastageform extends Activity implements View.OnClickListener {
 
     }
 
-    private String getStringImage(String path) {
-        String encodedImage = null;
-        try {
 
-            if (path != null) {
-                Bitmap mBitmap = BitmapFactory.decodeFile(path);
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
-                byte[] byteArrayImage = baos.toByteArray();
-                encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
-            }
-        } catch (Exception e) {
-            Log.d("unable to read image", e.toString());
-//            Toast.makeText(MainActivity1.this,"Retake picture",Toast.LENGTH_SHORT).show();
-        }
-        return encodedImage;
+
+    private void selectImage()
+    {
+
+        Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(takePicture, 0);
+
+        //  by selecting from gallery
+//        Intent intent =new Intent();
+//        intent.setType("image/*");
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        startActivityForResult(intent,IMG_REQUEST);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("Camera request code......................" + resultCode);
-        if (requestCode == O_IMAGE2 && resultCode == RESULT_OK) {
-            try {
-                BitmapFactory.Options opt = new BitmapFactory.Options();
-                opt.inSampleSize = 8;
-                opt.inMutable = true;
-                Bitmap bmImage = BitmapFactory.decodeFile(otherImagefile2.getPath().toString(), opt);
-                waste_image.setScaleType(ImageView.ScaleType.FIT_XY);
-                waste_image.setImageBitmap(bmImage);
-                compressImage(otherImagefile2.getAbsolutePath().toString());
-            } catch (Exception e) {
-                Log.e("msg", e.getMessage());
-            }
-        } else {
-            try {
-                BitmapFactory.Options opt = new BitmapFactory.Options();
-                opt.inSampleSize = 8;
-                opt.inMutable = true;
-                Bitmap bmImage = BitmapFactory.decodeResource(Biowastageform.this.getResources(), R.drawable.imgnoavailable);
-                FileOutputStream fos = new FileOutputStream(otherImagefile2);
-                bmImage.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                fos.flush();
-                fos.close();
-                //  Bitmap bmImage = BitmapFactory.decodeFile(otherImagefile2.getPath().toString(), opt);
-                waste_image.setScaleType(ImageView.ScaleType.FIT_XY);
-                waste_image.setImageBitmap(bmImage);
-                compressImage(otherImagefile2.getAbsolutePath().toString());
-            } catch (Exception e) {
-                Log.e("msg", e.getMessage());
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+
+
+        if (resultCode != RESULT_CANCELED) {
+
+            if (resultCode == RESULT_OK && data != null) {
+                bitmap = (Bitmap) data.getExtras().get("data");
+                waste_image.setImageBitmap(bitmap);
+                waste_image.setVisibility(View.VISIBLE);
+                //name.setVisibility(View.VISIBLE);
             }
         }
+
+
+
+
+        //selecting from gallery
+//        if(requestCode==IMG_REQUEST && resultCode==RESULT_OK && data!=null){
+//            Uri path = data.getData();
+//            try {
+//                bitmap= MediaStore.Images.Media.getBitmap(getContentResolver(),path);
+//                imageView.setImageBitmap(bitmap);
+//                imageView.setVisibility(View.VISIBLE);
+//                name.setVisibility(View.VISIBLE);
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+
     }
+
+    private String imageToString(Bitmap bitmap){
+        if(bitmap!=null) {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            byte[] imageByte = byteArrayOutputStream.toByteArray();
+            return Base64.encodeToString(imageByte, Base64.DEFAULT);
+
+        }else{
+            return "null";
+        }
+    }
+
+
 
     private String getRealPathFromURI(String contentURI) {
         Uri contentUri = Uri.parse(contentURI);
@@ -1158,6 +1255,7 @@ public class Biowastageform extends Activity implements View.OnClickListener {
             @Override
             public void onFailure(okhttp3.Call call, IOException e) {
                 Log.d("result", e.getMessage().toString());
+                Toast.makeText(Biowastageform.this,"Failed",Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
 
@@ -1193,4 +1291,9 @@ public class Biowastageform extends Activity implements View.OnClickListener {
     }
 
 
+
 }
+
+
+
+

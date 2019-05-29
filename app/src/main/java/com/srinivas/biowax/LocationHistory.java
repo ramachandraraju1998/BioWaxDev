@@ -34,6 +34,7 @@ public class LocationHistory extends Activity implements View.OnClickListener {
     TextView latitude_tv, longitude_tv;
     ImageView loaction_back;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +112,8 @@ public class LocationHistory extends Activity implements View.OnClickListener {
                             System.out.println("JONDDDd " + obj.toString());
                             System.out.println("JONDDDd " + obj.getString("token"));
 
-                            LocationHistory.this.longitude_tv.post(new Runnable() {
+                            LocationHistory.this.longitude_tv.post(
+                                    new Runnable() {
                                 public void run() {
                                     showDialog(LocationHistory.this, "Invalid Response..", "true");
                                 }

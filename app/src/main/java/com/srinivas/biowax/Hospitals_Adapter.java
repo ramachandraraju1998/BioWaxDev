@@ -8,11 +8,13 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -68,6 +70,7 @@ public class Hospitals_Adapter extends RecyclerView.Adapter<Hospitals_Adapter.Ho
                     Intent biowaxform = new Intent(context, Biowastageform.class);
                     biowaxform.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     biowaxform.putExtra("hcf_id",hospitals.get(i).getHcf_id());
+
                     biowaxform.putExtra("hcfcode",hospitals.get(i).getH_code());
                     context.startActivity(biowaxform);
                 }else {

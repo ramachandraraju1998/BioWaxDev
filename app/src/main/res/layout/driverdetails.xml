@@ -54,6 +54,7 @@
             android:inputType="text"
             android:paddingLeft="10dp"
             android:textColor="@color/black"
+            android:focusable="false"
             android:textColorHint="@color/black" />
     </android.support.design.widget.TextInputLayout>
 
@@ -71,6 +72,7 @@
             android:layout_height="50dp"
             android:background="@drawable/border"
             android:hint="Employee Name"
+            android:focusable="false"
             android:inputType="text"
             android:paddingLeft="10dp"
             android:textColor="@color/black"
@@ -89,6 +91,7 @@
             android:id="@+id/employephone"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:focusable="false"
             android:background="@drawable/border"
             android:hint="Mobile Number"
             android:inputType="text"
@@ -109,6 +112,7 @@
             android:id="@+id/email_id"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:focusable="false"
             android:background="@drawable/border"
             android:hint="Email ID"
             android:inputType="text"
@@ -133,6 +137,7 @@
             android:hint="Route Direction "
             android:inputType="text"
             android:paddingLeft="10dp"
+            android:focusable="false"
             android:text=""
             android:textColor="@color/black"
             android:textColorHint="@color/black" />

@@ -63,7 +63,7 @@
                     android:layout_marginBottom="8dp"
                     android:layout_weight="1.5"
                     android:gravity="center"
-                    android:text="Hospitals "
+                    android:text="Garbage "
                     android:textColor="@color/colorPrimary"
                     android:textSize="15dp"
                     android:textStyle="bold" />
@@ -152,7 +152,7 @@
                     android:layout_marginBottom="8dp"
                     android:layout_weight="1.5"
                     android:gravity="center"
-                    android:text="Profile"
+                    android:text="Driver Info "
                     android:textColor="@color/colorPrimary"
                     android:textSize="15dp"
                     android:textStyle="bold" />
@@ -241,7 +241,7 @@
                     android:layout_marginBottom="8dp"
                     android:layout_weight="1.5"
                     android:gravity="center"
-                    android:text="Invoices"
+                    android:text="History"
                     android:textColor="@color/colorPrimary"
                     android:textSize="15dp"
                     android:textStyle="bold" />

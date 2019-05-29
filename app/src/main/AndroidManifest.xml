@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.srinivas.biowax">
-
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.DELETE_CACHE_FILES" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -13,14 +17,11 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
-
-
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
-
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -31,10 +32,19 @@
         android:hardwareAccelerated="true"
         android:icon="@drawable/schemax"
         android:label="@string/app_name"
-         android:supportsRtl="true"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.srinivas.Printer.Print_Receipt"></activity>
+        <activity android:name=".collectioRecipts"></activity>
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <activity android:name="com.srinivas.Printer.Print_Receipt" />
         <activity android:name="com.srinivas.Driver.Driverdetails" />
         <activity android:name="com.srinivas.Driver.Agentdetails" />
         <activity android:name=".History_View" />
@@ -55,13 +65,10 @@
         <activity android:name=".Home" />
         <activity android:name=".GarbageCollection" />
         <activity android:name=".GarbageInvoices" />
-
-        <activity
-            android:name="com.srinivas.PrintBt.FirstActivity"/>
+        <activity android:name="com.srinivas.PrintBt.FirstActivity" />
         <activity
             android:name="com.srinivas.PrintBt.DeviceListActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Dialog"></activity>
-
+            android:theme="@android:style/Theme.DeviceDefault.Dialog" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

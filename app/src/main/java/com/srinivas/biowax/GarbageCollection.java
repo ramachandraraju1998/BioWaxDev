@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +48,7 @@ public class GarbageCollection extends Activity implements View.OnClickListener 
     ImageView myimage;
     ProgressDialog pd;
     SearchView svOutletNameAddress;
+    RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +67,7 @@ public class GarbageCollection extends Activity implements View.OnClickListener 
         pd.setIndeterminate(true);
         pd.setCancelable(false);
         pd.show();
+       // recyclerView=findViewById(R.id.recyleview);
        /* try {
             getRoutes();
         } catch (IOException e) {
@@ -118,6 +121,9 @@ public class GarbageCollection extends Activity implements View.OnClickListener 
         svOutletNameAddress.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+
+               // Toast.makeText(GarbageCollection.this,"No result Found",Toast.LENGTH_LONG).show();
+
                 return false;
             }
 
@@ -127,7 +133,7 @@ public class GarbageCollection extends Activity implements View.OnClickListener 
                 hospitals_adapter.filteraddress(newText.toString());
 
 
-                // rla.filteraddress(newText.toString());
+               // rla.filteraddress(newText.toString());
                 return false;
 
             }
@@ -237,6 +243,8 @@ public class GarbageCollection extends Activity implements View.OnClickListener 
         return dist; // output distance, in MILES
     }
 
+
+
     public void getRoutes() throws IOException {
 
         SharedPreferences ss = getSharedPreferences("Login", MODE_PRIVATE);
@@ -268,7 +276,7 @@ public class GarbageCollection extends Activity implements View.OnClickListener 
                     Log.d("result", response.toString());
                     throw new IOException("Unexpected code " + response);
                 } else {
-                    pd.dismiss();
+
                     Log.d("result", response.toString());
                     String responseBody = response.body().string();
                     final JSONObject obj;
@@ -293,7 +301,8 @@ public class GarbageCollection extends Activity implements View.OnClickListener 
 
                                 System.out.println("dadi see here "+hos.getString("contact_number"));
 
-                            }
+                            }pd.dismiss();
+                            
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

@@ -73,20 +73,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                     android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
                     android:text="Save and Continue" />
 
-                <TextView
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:id="@+id/completed_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center|start"
-                    android:text="Take Print"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="18dp"
-                    android:textStyle="bold" />
+                <!--<TextView-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:id="@+id/completed_tv"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:gravity="center|start"-->
+                    <!--android:text="Take Print"-->
+                    <!--android:textColor="@color/colorPrimary"-->
+                    <!--android:textSize="18dp"-->
+                    <!--android:textStyle="bold" />-->
             </LinearLayout>
 
 
@@ -302,31 +303,31 @@
                     android:textColorLink="@color/black" />
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="25dp"
-                android:layout_weight="1"
-                android:textColorHint="@color/black"
-                app:boxBackgroundColor="@color/black">
+            <!--<android.support.design.widget.TextInputLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_marginRight="25dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:textColorHint="@color/black"-->
+                <!--app:boxBackgroundColor="@color/black">-->
 
-                <EditText
-                    android:id="@+id/is_manual_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@drawable/border"
-                    android:ellipsize="start"
-                    android:hint="Is Input Manual Yes / No"
-                    android:inputType="text"
-                    android:paddingLeft="10dp"
-                    android:text="Yes"
-                    android:textColor="@color/black"
-                    android:textColorHighlight="@color/black"
-                    android:textColorHint="@color/black"
-                    android:textColorLink="@color/black" />
-            </android.support.design.widget.TextInputLayout>
+                <!--<EditText-->
+                    <!--android:id="@+id/is_manual_input"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="50dp"-->
+                    <!--android:background="@drawable/border"-->
+                    <!--android:ellipsize="start"-->
+                    <!--android:hint="Is Input Manual Yes / No"-->
+                    <!--android:inputType="text"-->
+                    <!--android:paddingLeft="10dp"-->
+                    <!--android:text="Yes"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--android:textColorHighlight="@color/black"-->
+                    <!--android:textColorHint="@color/black"-->
+                    <!--android:textColorLink="@color/black" />-->
+            <!--</android.support.design.widget.TextInputLayout>-->
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -347,7 +348,7 @@
                     android:hint="Authorized Person Name"
                     android:inputType="text"
                     android:paddingLeft="10dp"
-                    android:text="  "
+                    android:text=""
                     android:textColor="@color/black"
                     android:textColorHighlight="@color/black"
                     android:textColorHint="@color/black"
@@ -429,20 +430,25 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="25dp"
                 android:orientation="horizontal"
-                android:weightSum="2">
+                android:weightSum="2"
+                android:id="@+id/radiogp">
 
                 <RadioButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Yes" />
+                    android:text="Yes"
+                    android:id="@+id/yes"
+
+                    />
 
                 <RadioButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="No"
-                    android:textIsSelectable="true" />
+                    android:id="@+id/no"
+                    />
             </RadioGroup>
 
 
@@ -452,7 +458,9 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="50dp"
-                android:src="@drawable/dustbin" />
+                android:layout_marginTop="5dp"
+                android:src="@drawable/cam"
+                android:visibility="gone"/>
 
         </LinearLayout>
 

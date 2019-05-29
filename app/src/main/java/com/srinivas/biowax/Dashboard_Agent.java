@@ -18,7 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.srinivas.Driver.Agentdetails;
-import com.srinivas.PrintBt.FirstActivity;
+import com.srinivas.Driver.Driverdetails;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,7 +68,7 @@ public class Dashboard_Agent extends Activity implements View.OnClickListener {
                     Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_NETWORK_STATE}, 0);
         } else {
-            Toast.makeText(getBaseContext(), "Else Part partd", Toast.LENGTH_SHORT).show();
+         //   Toast.makeText(getBaseContext(), "Else Part partd", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -116,19 +117,20 @@ public class Dashboard_Agent extends Activity implements View.OnClickListener {
                 break;
             case R.id.mapview_ll:
                 vibrate();
+                //LocationHistory
                 Intent locationhistory = new Intent(Dashboard_Agent.this, LocationHistory.class);
                 startActivity(locationhistory);
                 break;
             case R.id.driverinfo_ll:
                 vibrate();
                 // Intent driver = new Intent(Dashboard.this, Driverdetails.class);
-                Intent driver = new Intent(Dashboard_Agent.this, Agentdetails.class);
+                Intent driver = new Intent(Dashboard_Agent.this, Driverdetails.class);
                 startActivity(driver);
                 break;
             case R.id.receipt_ll:
                 vibrate();
                 //GarbageInvoices
-                Intent invoices = new Intent(Dashboard_Agent.this, FirstActivity.class);
+                Intent invoices = new Intent(Dashboard_Agent.this, GarbageInvoices.class);
                 startActivity(invoices);
                 break;
             case R.id.logout_ll:

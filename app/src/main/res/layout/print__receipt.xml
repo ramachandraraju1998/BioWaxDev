@@ -37,9 +37,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/border"
         android:orientation="vertical">
 
@@ -48,7 +49,7 @@
              android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:src="@drawable/printer" />
+            android:src="@drawable/bio" />
 
         <TextView
             android:id="@+id/trans_code_tv"
@@ -57,14 +58,30 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="Transaction Code"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:textStyle="bold" />
+        <TextView
+            android:id="@+id/headder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Headder"
+            android:textSize="14dp"
+             />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="end"
+            android:text="- - - - - - - - - - - - - - -  - - - - -  - - - - - - - - - - - - -  " />
+
         <TextView
              android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Weights   |   Color"
+            android:text="   Barcode    |   Color  |   Weights  "
             android:textSize="20dp"
             android:textStyle="bold" />
         <TextView
@@ -72,11 +89,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="end"
-            android:text="- - - - - - - - - - - - - - -  - - - - -  - - " />
+            android:text="- - - - - - - - - - - - - - -  - - - - -  - - - - - - - - - - - - -  " />
 
         <TextView
             android:id="@+id/weights_tv"
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
@@ -87,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="end"
-            android:text="- - - - - - - - - - - - - - -  - - - - -  - - " />
+            android:text="- - - - - - - - - - - - - - -  - - - - -  - - - - - - - - - - - - - " />
 
         <TextView
             android:id="@+id/netweight"
@@ -96,9 +113,42 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="Net weight : 0.0"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:layout_marginBottom="50dp"
             android:textStyle="bold" />
+
+<ImageView
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:layout_gravity="center"
+    android:src="@drawable/print"
+    android:id="@+id/mscan"/>
+        <!--<Button-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:id="@+id/Scan"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:text="Scan"-->
+            <!--&gt;</Button>-->
+        <!--<Button-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:id="@+id/mPrint"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:text="Print"></Button>-->
+
+        <!--<Button-->
+            <!--android:id="@+id/dis"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:text="Dissable"></Button>-->
         <TextView
             android:layout_marginBottom="10dp"
             android:layout_width="wrap_content"
@@ -106,8 +156,18 @@
             android:layout_gravity="center"
             android:gravity="end"
             android:text="Poweredby Schemax software" />
+        <TextView
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="end"
+            android:text="" />
 
     </LinearLayout>
 
    </ScrollView>
+
+
+
 </LinearLayout>

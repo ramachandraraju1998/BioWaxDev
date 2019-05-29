@@ -108,7 +108,7 @@ public class Login extends Activity implements View.OnClickListener {
                     if (Validations.hasActiveInternetConnection(Login.this)) {
                         login.setVisibility(View.VISIBLE);
                         try {
-                            GetValidation();
+                            Getlogin();
 
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -216,12 +216,14 @@ public class Login extends Activity implements View.OnClickListener {
                                 ss.putString("type", user.getString("employee_type"));
                                 ss.putString("user_id", user.getString("user_id"));
                                 ss.putString("access_token", obj.getString("access_token"));
-
+                                ss.putString("employee_name",userdetails.getString("name"));
                                 ss.putString("driverid", driverid);
                                 ss.putString("truck_id", truck_id);
                                 ss.putString("routeid", routes_masters_driver.getString("route_number"));
                                 ss.putString("data", obj.toString());
                                 ss.putString("role_name",userdetails.getString("role_name"));
+
+                                ss.putString("imei",imenumber1);
                                 ss.commit();
 
 
@@ -290,102 +292,7 @@ public class Login extends Activity implements View.OnClickListener {
         dialog.show();
     }
 
-    public void GetValidation() throws IOException {
 
-        //https://docs.google.com/spreadsheets/d/1BWpOo_O_mBVV99TPdt5QdN7qzXlVVrbaE7dTQS3QhUs/edit#gid=0
-        //emergencymail045@gmail.com password :  wadahell@123
-        // avoid creating several instances, should be singleon
-        OkHttpClient client = new OkHttpClient();
-
-        Request request = new Request.Builder()
-                .header("Accept", "application/json")
-                .header("Content-Type", "application/json")
-                .url("https://script.google.com/macros/s/AKfycbxC_st1dCob-DKbdwwnObhFFhr2KIMWJYk_XasQy87uYKQ_JQA/exec?" +
-                        "id=1BWpOo_O_mBVV99TPdt5QdN7qzXlVVrbaE7dTQS3QhUs&sheet=Biowax")
-                .get()
-                .build();
-
-
-        client.newCall(request).enqueue(new okhttp3.Callback() {
-            @Override
-            public void onFailure(okhttp3.Call call, IOException e) {
-                //login.setVisibility(View.GONE);
-                Log.d("result dadi", e.getMessage().toString());
-                e.printStackTrace();
-                runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        Toast.makeText(getBaseContext(), "IMEI Number or password doesnt exist", Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-
-                //pd.dismiss();
-            }
-
-            @Override
-            public void onResponse(okhttp3.Call call, final okhttp3.Response response) throws IOException {
-                // pd.dismiss();
-                if (!response.isSuccessful()) {
-
-                    Log.d("result dadi", response.toString());
-                    throw new IOException("Unexpected code " + response);
-                } else {
-                    //  pd.dismiss();
-                    Log.d("result", response.toString());
-                    String responseBody = response.body().string();
-                    final JSONObject obj;
-                    try {
-                        JSONObject js = new JSONObject(responseBody.toString());
-                        JSONArray records = new JSONArray(js.getString("records"));
-                        Boolean result = false;
-                        for (int i = 0; i < records.length(); i++) {
-                            JSONObject res = records.getJSONObject(i);
-                            System.out.println(res.toString());
-                            if (res.getString("Facultyid").equals("admin2")) {
-                                result = true;
-                                break;
-                            } else {
-                                result = false;
-                            }
-                        }
-                        if (result) {
-                            runOnUiThread(new Runnable() {
-
-                                @Override
-                                public void run() {
-                                    // Toast.makeText(getBaseContext(), "User Already Registered", Toast.LENGTH_SHORT).show();
-                                    // Stuff that updates the UI
-                                    //showDialog(Login.this, "Sucessfully Login in your account ", "wow");
-                                    try {
-                                        Getlogin();
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            });
-
-                        } else {
-                            runOnUiThread(new Runnable() {
-
-                                @Override
-                                public void run() {
-                                    //Toast.makeText(getBaseContext(), "Password Incorrect !!", Toast.LENGTH_SHORT).show();
-                                    showDialog(Login.this, "Password Incorrect !! ", "yes");
-                                }
-                            });
-
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-
-    }
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
