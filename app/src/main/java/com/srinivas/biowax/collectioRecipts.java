@@ -49,7 +49,7 @@ String[] plants = new String[]{
 
     String responseBody;
     List<String> plantsList;
-    TextView just,success,hspname,balence_textview;
+    TextView success,hspname,balence_textview;
     ArrayAdapter<String> spinnerArrayAdapter;
     ProgressDialog pd;
     int send=0;
@@ -59,11 +59,20 @@ String[] plants = new String[]{
     int balence;
     String set;
     LinearLayout li;
-    int amm,ch;
+    int amm,ch=0;
     ImageView print;
-
-    SharedPreferences ss;
+    TextView inv_date,inv_month,inv_amt,paid_amt,total_amt;
+    String invoice_id;
+    String invoice_date;
+    String billing_month;
+    String invoice_amount;
+    int paid_amount;
+    String total_amount;
+    String finalInvoice_date;
+    String inid="",indt="",inamt="",pa="",ta="";
     int checkedItem=0;
+    SharedPreferences ss;
+   // int checkedItem=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +81,11 @@ String[] plants = new String[]{
         //alertbox dialog
         // setup the alert builder
 
-
+inv_date=findViewById(R.id.inv_date);
+inv_month=findViewById(R.id.inv_month);
+inv_amt=findViewById(R.id.inv_amt);
+paid_amt=findViewById(R.id.paid_amt);
+total_amt=findViewById(R.id.totalamt);
 
 
         pd = new ProgressDialog(collectioRecipts.this);
@@ -84,7 +97,12 @@ String[] plants = new String[]{
         ss = getSharedPreferences("Login", MODE_PRIVATE);
         spinner = (Spinner) findViewById(R.id.spinner1);
        pay=findViewById(R.id.pay);
-       balamount=findViewById(R.id.balamount);
+       balamount=findViewById(R.id.balamount);balamount.setFocusable(false);
+        balamount.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+               balamount.setFocusableInTouchMode(true); //to enable it
+            }
+        });
         li=findViewById(R.id.linearlayout);
         print=findViewById(R.id.printimage);
         hspname=findViewById(R.id.hspname);
@@ -98,31 +116,32 @@ String[] plants = new String[]{
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s!=("") || s.length()!=0 || s!=null) {
-                String getdata=s.toString();
-                    long enter=0;
-                    if(!getdata.equals(""))
-                     enter = Long.parseLong(getdata);
-                    long bb = Long.parseLong(set) - enter;
+                if (set != null ) {
+                    if (s != null) {
+                        String getdata = s.toString();
+                        int enter = 0;
+                        if (!getdata.equals(""))
+                            enter = Integer.parseInt(getdata);
+                        int bb = Integer.parseInt(set) - enter;
 
-if(bb>0) {
-    balence_textview.setTextSize(TypedValue.COMPLEX_UNIT_SP,10);
-    balence_textview.setTextColor(Color.parseColor("#000000"));
-    balence_textview.setText("Balance = " + bb);
+                        if (bb > 0) {
+                            balence_textview.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+                            balence_textview.setTextColor(Color.parseColor("#000000"));
+                            balence_textview.setText("Balance = " + bb);
 
-}
-                    if(bb<0){
-                        balence_textview.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
-                        balence_textview.setTextColor(Color.parseColor("#ff0000"));
-                        balence_textview.setText("Balance = " + bb);
-                    }else if(bb==0){
+                        }
+                        if (bb < 0) {
+                            balence_textview.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                            balence_textview.setTextColor(Color.parseColor("#ff0000"));
+                            balence_textview.setText("Balance = " + bb);
+                        } else if (bb == 0) {
+                            balence_textview.setText("Balance = 0");
+                        }
+                    } else {
                         balence_textview.setText("Balance = 0");
                     }
-                }else {
-                    balence_textview.setText("Balance = 0");
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -143,13 +162,15 @@ if(bb>0) {
                    final AlertDialog.Builder builder = new AlertDialog.Builder(collectioRecipts.this);
                    builder.setTitle("Pay Amount "+amm+" Through");
 
+
                    builder.setSingleChoiceItems(animals, checkedItem, new DialogInterface.OnClickListener() {
                        @Override
                        public void onClick(DialogInterface dialog, int which) {
                            // user checked an item
-                           ch=checkedItem;
-                       //    ch=checkedItem;
+                           //Toast.makeText(getBaseContext(), , Toast.LENGTH_SHORT).show();
+                         ch=which;
                            //
+
 
 
                        }
@@ -160,6 +181,7 @@ if(bb>0) {
                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                        @Override
                        public void onClick(DialogInterface dialog, int which) {
+                           Toast.makeText(getBaseContext(),animals[ch], Toast.LENGTH_SHORT).show();
                            payAmount(amm);
 
                            // user clicked OK
@@ -179,7 +201,7 @@ if(bb>0) {
 
            }
        });
-     just=findViewById(R.id.just);
+
      plantsList = new ArrayList<>(Arrays.asList(plants));
 
         // Initializing an ArrayAdapter
@@ -293,7 +315,9 @@ runOnUiThread(new Runnable() {
         print.setVisibility(View.VISIBLE);
         success.setVisibility(View.VISIBLE);
         success.setText("successfully paid "+amt+"rs");
-        Toast.makeText(getBaseContext(), animals[ch].toString(), Toast.LENGTH_SHORT).show();
+
+
+
     }
 });
     getTableDetails(send);
@@ -359,48 +383,71 @@ ch=0;
                 try {
 //                        Toast.makeText(getBaseContext(), "success", Toast.LENGTH_SHORT).show();
                     obj=new JSONObject(responseBody1);
-                    if(obj.getString("status").equals("true")){
+                    if(obj.getString("status").equals("true")) {
 
                         JSONObject data = obj.getJSONObject("data");
                         JSONArray ar = data.getJSONArray("invoice_list");
-                        if(ar.length()==0){  runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                li.setVisibility(View.INVISIBLE);
-                                just.setText("NO DATA");
-                                Toast.makeText(getBaseContext(),"No data", Toast.LENGTH_SHORT).show();
+                        if (ar.length() == 0) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    li.setVisibility(View.INVISIBLE);
 
-                                pd.dismiss();
+                                    Toast.makeText(getBaseContext(), "No data", Toast.LENGTH_SHORT).show();
+
+                                    pd.dismiss();
+
+                                }
+                            });
+                        } else {
+                            for (int i = 0; i < ar.length(); i++) {
+                                JSONObject rs = ar.getJSONObject(i);
+                                 invoice_id = rs.getString(("invoice_id"));
+                                invoice_date = rs.getString("invoice_date").toString();
+                              billing_month = rs.getString("billing_month").toString();
+                                 invoice_amount = String.valueOf(rs.getInt("invoice_amount"));
+                                  paid_amount = rs.getInt("paid_amount");
+                                total_amount = String.valueOf(rs.getInt("total_amount"));
+                                invoice_date = invoice_date.substring(0, 11);
+                              finalInvoice_date = invoice_date;
+
+//String inid,indt,inamt,pa,ta;
+                                inid=inid+invoice_date+"\n";
+                                indt=indt+billing_month+"\n";
+                                inamt=inamt+invoice_amount+"\n";
+                                pa=pa+paid_amount+"\n";
+                                ta=ta+total_amount+"\n";
+
+
+
+                                //       table=table+invoice_date+"    "+billing_month+"       "+invoice_amount+"          "+paid_amount+"          "+total_amount+"  \n";
                             }
-                        }); }
-                        for(int i=0;i<ar.length();i++){
-                            JSONObject rs = ar.getJSONObject(i);
-                            String invoice_id=rs.getString(("invoice_id"));
-                            String invoice_date=rs.getString("invoice_date");
-                            String billing_month=rs.getString("billing_month");
-                            String invoice_amount=rs.getString("invoice_amount");
-                            String paid_amount=rs.getString("paid_amount");
-                            String total_amount=rs.getString("total_amount");
-                            invoice_date = invoice_date.substring( 0, 11);
-                             table=table+invoice_date+"    "+billing_month+"       "+invoice_amount+"          "+paid_amount+"          "+total_amount+"  \n";
+                            JSONArray total = data.getJSONArray("total");
+                            JSONObject bal = total.getJSONObject(0);
+                            balence = bal.getInt("balance");
+                            set = String.valueOf(balence);
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    li.setVisibility(View.VISIBLE);
+
+                                    inv_date.setText(inid);
+                                    inv_month.setText(indt);
+                                    inv_amt.setText(inamt);
+                                    paid_amt.setText(pa);
+                                    total_amt.setText(ta);
+                                    //  just.setText(table);
+
+                                    balamount.setText(set);
+                                    //table = "";
+                                    inid="";indt="";inamt="";pa="";ta="";
+
+                                    pd.dismiss();
+                                }
+                            });
+
                         }
-                        JSONArray total= data.getJSONArray("total");
-                        JSONObject bal=total.getJSONObject(0);
-                       balence = bal.getInt("balance");
-                      set = String.valueOf(balence);
-
-                     runOnUiThread(new Runnable() {
-                         @Override
-                         public void run() {
-                             li.setVisibility(View.VISIBLE);
-                             just.setText(table);
-
-                            balamount.setText(set);
-                             table="";
-                             pd.dismiss();
-                         }
-                     });
-
                     }
 
                 } catch (JSONException e) {

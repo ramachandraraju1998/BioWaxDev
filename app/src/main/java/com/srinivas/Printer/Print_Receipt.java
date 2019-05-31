@@ -54,6 +54,8 @@ import static com.srinivas.PrintBt.FirstActivity.intToByteArray;
 
 public class Print_Receipt extends Activity implements Runnable {
     TextView trans_code_tv, weights_tv, netweight, headder;
+    TextView barcode_list,barcode_color,barcode_weight;
+    String br_list="",br_color="",br_weight="";
     ProgressDialog pd;
     String def;
     ImageView printer_img, history_back;
@@ -86,6 +88,8 @@ public class Print_Receipt extends Activity implements Runnable {
     String responseBody;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +97,10 @@ public class Print_Receipt extends Activity implements Runnable {
 
         transid = getIntent().getStringExtra("transaction_code").toString();
         //printer
+
+        barcode_list=findViewById(R.id.barcode_list);
+        barcode_color=findViewById(R.id.barcode_color);
+        barcode_weight=findViewById(R.id.barcode_weight);
 
         final SharedPreferences ss = getSharedPreferences("Login", MODE_PRIVATE);
         mScan = (ImageView) findViewById(R.id.mscan);
@@ -130,7 +138,7 @@ public class Print_Receipt extends Activity implements Runnable {
 
 
 
-        weights_tv = findViewById(R.id.weights_tv);
+      //  weights_tv = findViewById(R.id.weights_tv);
         trans_code_tv = findViewById(R.id.trans_code_tv);
         printer_img = findViewById(R.id.printer_img);
         netweight = findViewById(R.id.netweight);
@@ -238,7 +246,12 @@ public class Print_Receipt extends Activity implements Runnable {
                                 Log.d("array val=",res.toString());
 //                                Toast.makeText(Print_Receipt.this,res.toString(),Toast.LENGTH_LONG).show();;
                                 String x = String.valueOf(i+1);
-                                vall = vall+"\t\t"+res.getString("barcode_number")+" \t\t\t "+res.getString("color_code")+" \t\t\t\t\t\t"+res.getString("bag_weight_in_hcf")+".00"+"\n ";
+
+                                br_list=br_list+res.getString("barcode_number")+"\n";
+                                br_color=br_color+res.getString("color_code")+"\n";
+                                br_weight=br_weight+res.getString("bag_weight_in_hcf")+".00\n";
+
+//                                vall = vall+"\t\t"+res.getString("barcode_number")+" \t\t\t "+res.getString("color_code")+" \t\t\t\t\t\t"+res.getString("bag_weight_in_hcf")+".00"+"\n ";
                                  //sum = sum+ Integer.parseInt(res.getString("bag_weight_in_hcf"));
                              }
   //total weight
@@ -256,14 +269,20 @@ public class Print_Receipt extends Activity implements Runnable {
                             final String head="Hospital : " +hos+"\n HCode  : "+hoscode+"\n Time : "+time;
 
 //rows
-                            final String finalVall = vall;
+                           // final String finalVall = vall;
                             runOnUiThread(new Runnable() {
 
                                 @Override
                                 public void run() {
                                   // Toast.makeText(getBaseContext(),finalVall,Toast.LENGTH_SHORT).show();
                                    headder.setText(head+"\n");
-                                    weights_tv.setText(finalVall);
+                                  //  weights_tv.setText(finalVall);
+
+                                    barcode_list.setText(br_list);
+                                    barcode_color.setText(br_color);
+                                    barcode_weight.setText(br_weight);
+
+                                    br_list="";br_color="";br_weight="";
                                     netweight.setText(totals);
                                    // String xxx = String.valueOf(sum);
                                    // netweight.setText("Total Net Weight :"+xxx);
@@ -459,7 +478,7 @@ public class Print_Receipt extends Activity implements Runnable {
                             + "--------------------------------\n";
 
 
-                    BILL = BILL + String.format("%1$-80000000000000000000000000s %2$12s %3$10s", "Barcode", "BagColor", "Weight");
+                    BILL = BILL + String.format("%1$-8s %2$12s %3$10s", "Barcode", "BagColor", "Weight");
                     BILL = BILL
                             + "--------------------------------";
                     obj = new JSONObject(responseBody);

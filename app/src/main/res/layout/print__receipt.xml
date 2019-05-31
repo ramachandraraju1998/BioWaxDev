@@ -91,13 +91,47 @@
             android:gravity="end"
             android:text="- - - - - - - - - - - - - - -  - - - - -  - - - - - - - - - - - - -  " />
 
+        <!--<TextView-->
+            <!--android:id="@+id/weights_tv"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:gravity="center"-->
+            <!--android:text="Weight_1 : 0.0" />-->
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_gravity="center"
+           android:gravity="center"
+           android:layout_marginLeft="1dp">
         <TextView
-            android:id="@+id/weights_tv"
+            android:id="@+id/barcode_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="Weight_1 : 0.0" />
+            android:text="BARCODE-0000"
+            android:layout_marginRight="1dp"
+            android:layout_marginLeft="30dp"/>
+
+           <TextView
+               android:id="@+id/barcode_color"
+               android:layout_width="50dp"
+               android:layout_height="wrap_content"
+              android:layout_gravity="center"
+               android:gravity="center"
+               android:layout_marginLeft="20dp"
+               android:text="R" />
+           <TextView
+               android:id="@+id/barcode_weight"
+               android:layout_width="100dp"
+               android:layout_height="wrap_content"
+               android:text="10.00"
+
+               android:layout_marginLeft="35dp"
+               />
+
+
+       </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"

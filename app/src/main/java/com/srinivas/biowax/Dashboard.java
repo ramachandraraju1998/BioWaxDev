@@ -114,7 +114,7 @@ public class Dashboard extends Activity implements View.OnClickListener {
             case R.id.history_ll:
                 vibrate();
                 //GarbageHistory.class
-                Intent garbageHistory = new Intent(Dashboard.this, collectioRecipts.class);
+                Intent garbageHistory = new Intent(Dashboard.this, GarbageHistory.class);
                 startActivity(garbageHistory);
                 break;
             case R.id.mapview_ll:
