@@ -25,9 +25,20 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/linearlayout"
-        android:visibility="gone">
+        >
 
-
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:text="GetOldRecipts"
+    android:textColor="@color/blue"
+    android:gravity="center"
+    android:onClick="getRecipts"
+    android:textSize="18dp"
+    android:layout_marginTop="10dp"
+    android:id="@+id/getrecp"
+    />
 
     <TextView
         android:layout_width="match_parent"
@@ -38,7 +49,7 @@
         android:textSize="18dp"
         android:layout_height="wrap_content"
         android:id="@+id/hspname"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
       />
     <TextView
         android:layout_width="wrap_content"

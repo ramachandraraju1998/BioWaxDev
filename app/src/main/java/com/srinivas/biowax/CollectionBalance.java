@@ -5,9 +5,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -19,7 +20,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +38,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
-public class collectioRecipts extends AppCompatActivity {
+public class CollectionBalance extends AppCompatActivity {
 
     private Spinner spinner;
 
@@ -77,11 +77,12 @@ String[] plants = new String[]{
     int checkedItem=0;
     SharedPreferences ss;
     int amtt=0;
+    TextView getrecp;
    // int checkedItem=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.collectio_recipts);
+        setContentView(R.layout.collection_balencescreen);
 
         //alertbox dialog
         // setup the alert builder
@@ -92,12 +93,14 @@ inv_amt=findViewById(R.id.inv_amt);
 paid_amt=findViewById(R.id.paid_amt);
 total_amt=findViewById(R.id.totalamt);
 
+getrecp=findViewById(R.id.getrecp);
+getrecp.setPaintFlags(getrecp.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
 
-        pd = new ProgressDialog(collectioRecipts.this);
+        pd = new ProgressDialog(CollectionBalance.this);
         pd.setMessage("getting Data..");
         pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         pd.setIndeterminate(true);
-        pd.setCancelable(false);
+        pd.setCancelable(true);
         pd.show();
         ss = getSharedPreferences("Login", MODE_PRIVATE);
         spinner = (Spinner) findViewById(R.id.spinner1);
@@ -165,7 +168,7 @@ total_amt=findViewById(R.id.totalamt);
 
 
 
-                   final AlertDialog.Builder builder = new AlertDialog.Builder(collectioRecipts.this);
+                   final AlertDialog.Builder builder = new AlertDialog.Builder(CollectionBalance.this);
                    builder.setTitle("Pay Amount "+amm+"rs Through");
 
 
@@ -207,7 +210,7 @@ total_amt=findViewById(R.id.totalamt);
 
 
                }else{
-                   Toast.makeText(collectioRecipts.this, "Please Enter Valid Amount", Toast.LENGTH_SHORT).show();
+                   Toast.makeText(CollectionBalance.this, "Please Enter Valid Amount", Toast.LENGTH_SHORT).show();
                }
 
            }
@@ -264,7 +267,7 @@ total_amt=findViewById(R.id.totalamt);
                     }
                 }
                 if(position==0){
-                    Toast.makeText(collectioRecipts.this, "please select hospital", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CollectionBalance.this, "please select hospital", Toast.LENGTH_SHORT).show();
                 }
                // selectionCurrent= position;
             }
@@ -334,7 +337,7 @@ amtt=amt;
 
 
 
-                        Intent i = new Intent(collectioRecipts.this,CollectinAgentPrintScreen.class);
+                        Intent i = new Intent(CollectionBalance.this,CollectinAgentPrintScreen.class);
                         i.putExtra("amt",s);
                         i.putExtra("hs_id",id);
                         i.putExtra("rid",rid);
@@ -534,7 +537,7 @@ amtt=amt;
                     public void run() {
 
                         // Stuff that updates the UI
-                        Toast.makeText(collectioRecipts.this, "Failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CollectionBalance.this, "Failed", Toast.LENGTH_SHORT).show();
                         pd.dismiss();
                     }
                 });
@@ -596,6 +599,21 @@ amtt=amt;
         }
 
         return str;
+    }
+    public void getRecipts(View view){
+
+
+        if(send!=0) {
+            String ss= String.valueOf(send);
+            Intent ii = new Intent(CollectionBalance.this, CollectinAgentReciptScreen.class);
+            ii.putExtra("id",ss);
+            startActivity(ii);
+
+
+        }else{
+            Toast.makeText(CollectionBalance.this,"please select Hospital", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 }

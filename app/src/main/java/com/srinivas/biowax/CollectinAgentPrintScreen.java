@@ -103,7 +103,7 @@ public class CollectinAgentPrintScreen extends AppCompatActivity implements Runn
         due_amt=findViewById(R.id.due_amt);
 
 
-        amt=   getIntent().getStringExtra("amt");
+      //  amt=   getIntent().getStringExtra("amt");
         hcf_id =getIntent().getStringExtra("hs_id");
         rid =getIntent().getStringExtra("rid");
 

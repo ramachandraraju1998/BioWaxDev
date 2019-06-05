@@ -35,8 +35,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CollectinAgentPrintScreen"></activity>
-        <activity android:name=".collectioRecipts" />
+        <activity android:name=".CollectinAgentReciptScreen"></activity>
+        <activity android:name=".CollectinAgentPrintScreen" />
+        <activity android:name=".CollectionBalance" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
