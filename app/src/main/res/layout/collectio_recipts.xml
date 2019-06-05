@@ -24,8 +24,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:id="@+id/linearlayout">
-        android:visibility="gone"
+        android:id="@+id/linearlayout"
+        android:visibility="gone">
+
 
 
     <TextView
@@ -180,32 +181,7 @@
             android:fontFamily="sans-serif-light"
             android:id="@+id/balence"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="success"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:textColor=" #00ff00"
-            android:textStyle="bold"
-            android:shadowRadius="5"
-            android:shadowColor="@color/black"
-            android:textSize="20dp"
-            android:id="@+id/success"
-            android:visibility="gone"/>
 
-        <ImageView
-            android:id="@+id/printimage"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="50dp"
-            android:layout_marginTop="5dp"
-            android:src="@drawable/print"
-            android:visibility="gone"
-
-            />
     </LinearLayout>
     </ScrollView>
 </LinearLayout>

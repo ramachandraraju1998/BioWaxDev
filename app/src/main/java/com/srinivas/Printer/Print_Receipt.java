@@ -478,7 +478,7 @@ public class Print_Receipt extends Activity implements Runnable {
                             + "--------------------------------\n";
 
 
-                    BILL = BILL + String.format("%1$-8s %2$12s %3$10s", "Barcode", "BagColor", "Weight");
+                    BILL = BILL + String.format("%1$-10s %2$10s %3$10s", "Barcode", "BagColor", "Weight");
                     BILL = BILL
                             + "--------------------------------";
                     obj = new JSONObject(responseBody);
@@ -503,15 +503,15 @@ public class Print_Receipt extends Activity implements Runnable {
 
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject res = jsonArray.getJSONObject(i);
-                        BILL = BILL + "\n " + String.format("%1$-13s %2$5s %3$8s ", res.getString("barcode_number"), res.getString("color_code"), res.getString("bag_weight_in_hcf"));
+                        BILL = BILL + "\n " + String.format("%1$-15s %2$2s %3$7s ", res.getString("barcode_number"), res.getString("color_code"), res.getString("bag_weight_in_hcf"));
 
                     }
                     BILL = BILL
                             + "\n-------------------------------";
                     BILL = BILL + "\n ";
 
-                    BILL = BILL + "      Total weight" + "  -  " + totalweight + "\n";
-                    BILL = BILL + "       Total Bags" + "    -  " + totalbags + "\n";
+                    BILL = BILL + "   Total weight" + "  -  " + totalweight + "\n";
+                    BILL = BILL + "    Total Bags" + "    -  " + totalbags + "\n";
 
                     BILL = BILL
                             + "-------------------------------\n\n";

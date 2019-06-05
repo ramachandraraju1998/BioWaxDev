@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CollectinAgentPrintScreen"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="success"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:shadowRadius="5"
+        android:shadowColor="@color/black"
+        android:textSize="22dp"
+        android:id="@+id/success"
+        android:visibility="gone"
+      />
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        android:id="@+id/ll">
+        <ImageView
+            android:id="@+id/printer_img"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/bio" />
+
+        <TextView
+            android:id="@+id/hs_name"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="20dp"
+            android:text=""
+            android:textSize="16dp" />
+        <TextView
+            android:id="@+id/rcp_num"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text=""
+            android:textSize="16dp" />
+        <TextView
+            android:id="@+id/rcp_date"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text=""
+            android:textSize="16dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="end"
+            android:text=" - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - -  - - - - - - - - - - - - - - " />
+        <TextView
+            android:id="@+id/due_amt"
+            android:layout_width="388dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="5dp"
+            android:text=""
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/paid_amt"
+            android:layout_width="388dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="45dp"
+
+            android:text=""
+            android:textSize="20dp" />
+        <TextView
+            android:id="@+id/bal_amt"
+            android:layout_width="388dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="45dp"
+
+            android:text=""
+            android:textSize="18dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="end"
+            android:text=" - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - -  - - - - - - - - - - - - - - " />
+        <ImageView
+            android:id="@+id/printimage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="50dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/print"
+
+
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/incdata"/>
+
+    </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

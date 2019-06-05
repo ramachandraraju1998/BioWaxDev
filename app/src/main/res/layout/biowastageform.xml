@@ -225,12 +225,16 @@
                     android:textColorLink="@color/black" />
             </android.support.design.widget.TextInputLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginRight="25dp"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:textColorHint="@color/black"
                 app:boxBackgroundColor="@color/black">
@@ -239,18 +243,28 @@
                     android:id="@+id/bag_weight_in_hcf"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_weight="1"
                     android:background="@drawable/border"
-                    android:ellipsize="start"
                     android:hint="Bag Weight"
-                    android:inputType="numberDecimal"
                     android:paddingLeft="10dp"
                     android:text="0"
+                    android:layout_gravity="start"
+                    android:maxLength="8"
+                    android:textSize="18dp"
                     android:textColor="@color/black"
                     android:textColorHighlight="@color/black"
                     android:textColorHint="@color/black"
                     android:textColorLink="@color/black" />
-            </android.support.design.widget.TextInputLayout>
 
+            </android.support.design.widget.TextInputLayout>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Weight"
+                    android:layout_marginTop="23dp"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/scan"/>
+        </LinearLayout>
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

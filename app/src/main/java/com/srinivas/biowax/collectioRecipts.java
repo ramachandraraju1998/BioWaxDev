@@ -2,6 +2,7 @@ package com.srinivas.biowax;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,19 +39,21 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 
 public class collectioRecipts extends AppCompatActivity {
+
     private Spinner spinner;
 
 String[] plants = new String[]{
         "Select Hospital",
 
 };
+    String[] payment = new String[10];
 
-    String[] animals = {"Cash", "Chequ", "Debit", "Credit", "wallet"};
+    List<String> paymode;//    = {"Cash", "Chequ", "Debit", "Credit", "wallet"};
 //hfgrhhgjgf
 
     String responseBody;
     List<String> plantsList;
-    TextView success,hspname,balence_textview;
+    TextView hspname,balence_textview;
     ArrayAdapter<String> spinnerArrayAdapter;
     ProgressDialog pd;
     int send=0;
@@ -72,6 +76,7 @@ String[] plants = new String[]{
     String inid="",indt="",inamt="",pa="",ta="";
     int checkedItem=0;
     SharedPreferences ss;
+    int amtt=0;
    // int checkedItem=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,9 +109,9 @@ total_amt=findViewById(R.id.totalamt);
             }
         });
         li=findViewById(R.id.linearlayout);
-        print=findViewById(R.id.printimage);
+
         hspname=findViewById(R.id.hspname);
-        success=findViewById(R.id.success);
+
         balence_textview=findViewById(R.id.balence);
         balamount.addTextChangedListener(new TextWatcher() {
             @Override
@@ -154,21 +159,24 @@ total_amt=findViewById(R.id.totalamt);
            public void onClick(View v) {
          String am=balamount.getText().toString();
            amm= Integer.parseInt(am);
-               print.setVisibility(View.GONE);
-               success.setVisibility(View.GONE);
-               if(amm<=balence ){//&& amm>0
+              // print.setVisibility(View.GONE);
+              // success.setVisibility(View.GONE);
+               if(amm<=balence && amm>0){//
+
 
 
                    final AlertDialog.Builder builder = new AlertDialog.Builder(collectioRecipts.this);
-                   builder.setTitle("Pay Amount "+amm+" Through");
+                   builder.setTitle("Pay Amount "+amm+"rs Through");
 
 
-                   builder.setSingleChoiceItems(animals, checkedItem, new DialogInterface.OnClickListener() {
+                   builder.setSingleChoiceItems(payment , checkedItem, new DialogInterface.OnClickListener() {
                        @Override
                        public void onClick(DialogInterface dialog, int which) {
                            // user checked an item
                            //Toast.makeText(getBaseContext(), , Toast.LENGTH_SHORT).show();
                          ch=which;
+
+
                            //
 
 
@@ -178,11 +186,14 @@ total_amt=findViewById(R.id.totalamt);
                    });
 
 // add OK and Cancel buttons
-                   builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                   builder.setPositiveButton("Pay", new DialogInterface.OnClickListener() {
                        @Override
                        public void onClick(DialogInterface dialog, int which) {
-                           Toast.makeText(getBaseContext(),animals[ch], Toast.LENGTH_SHORT).show();
-                           payAmount(amm);
+                           pd.show();
+                           //Toast.makeText(getBaseContext(), paymode.get(ch), Toast.LENGTH_SHORT).show();
+                           ch=ch+1;
+                           payAmount(amm,ch);
+                           ch=0;
 
                            // user clicked OK
                        }
@@ -203,6 +214,7 @@ total_amt=findViewById(R.id.totalamt);
        });
 
      plantsList = new ArrayList<>(Arrays.asList(plants));
+     paymode= new ArrayList<>();
 
         // Initializing an ArrayAdapter
        spinnerArrayAdapter = new ArrayAdapter<String>(
@@ -220,8 +232,8 @@ total_amt=findViewById(R.id.totalamt);
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 
-                print.setVisibility(View.GONE);
-                success.setVisibility(View.GONE);
+             //   print.setVisibility(View.GONE);
+              //  success.setVisibility(View.GONE);
                 if (position!=0){
                     String s=spinnerArrayAdapter.getItem(position).toString();
                     hspname.setText(s);
@@ -265,15 +277,15 @@ total_amt=findViewById(R.id.totalamt);
 
     }
 
-    private void payAmount(final int amt) {
-
+    private void payAmount(int amt,int payid) {
+amtt=amt;
         RequestBody formBody = new FormBody.Builder().build();
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .header("Accept", "application/json")
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Bearer" + ss.getString("access_token", ""))
-                .url("http://175.101.151.121:8002/api/paymentreceiptsformobile/"+send+"/"+amt)
+                .url("http://175.101.151.121:8002/api/paymentreceiptsformobile/"+send+"/"+amt+"/"+payid)
                 .post(formBody)
                 .build();
 
@@ -309,30 +321,49 @@ total_amt=findViewById(R.id.totalamt);
 
                     obj = new JSONObject(responseBody1);
                     if (obj.getString("status").equals("true")) {
-runOnUiThread(new Runnable() {
-    @Override
-    public void run() {
-        print.setVisibility(View.VISIBLE);
-        success.setVisibility(View.VISIBLE);
-        success.setText("successfully paid "+amt+"rs");
+
+                        JSONObject data = obj.getJSONObject("data");
+                        JSONArray ar = data.getJSONArray("receipt_details");
+                        JSONObject rs = ar.getJSONObject(0);
+                        String rid=rs.getString("receipt_id");
+
+
+            String s= String.valueOf(amtt);
+            String id= String.valueOf(send);
 
 
 
-    }
-});
-    getTableDetails(send);
+
+                        Intent i = new Intent(collectioRecipts.this,CollectinAgentPrintScreen.class);
+                        i.putExtra("amt",s);
+                        i.putExtra("hs_id",id);
+                        i.putExtra("rid",rid);
+                        pd.dismiss();
+                        startActivity(i);
+
+
+      //  print.setVisibility(View.VISIBLE);
+       // success.setVisibility(View.VISIBLE);
+       // success.setText("successfully paid "+amt+"rs");
+
+
+
+
+   // getTableDetails(send);
 
                     }
 
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    pd.dismiss();
                 }
 
             }
             });
 
-ch=0;
+
+
     }
 
     private void getTableDetails(int position) {
@@ -422,6 +453,18 @@ ch=0;
 
                                 //       table=table+invoice_date+"    "+billing_month+"       "+invoice_amount+"          "+paid_amount+"          "+total_amount+"  \n";
                             }
+                            //payment mode
+                            JSONArray pay_mode=data.getJSONArray("payment_mode");
+                            for(int i=0;i<pay_mode.length();i++){
+                                JSONObject res = pay_mode.getJSONObject(i);
+                                paymode.add(res.getString("payment_method"));
+
+                            }
+
+                      payment = GetStringArray((ArrayList<String>) paymode);
+
+
+
                             JSONArray total = data.getJSONArray("total");
                             JSONObject bal = total.getJSONObject(0);
                             balence = bal.getInt("balance");
@@ -538,6 +581,21 @@ ch=0;
 
         });
 
+    }
+    public static String[] GetStringArray(ArrayList<String> arr)
+    {
+
+        // declaration and initialise String Array
+        String str[] = new String[arr.size()];
+
+        // ArrayList to Array Conversion
+        for (int j = 0; j < arr.size(); j++) {
+
+            // Assign each value to String array
+            str[j] = arr.get(j);
+        }
+
+        return str;
     }
 
 }

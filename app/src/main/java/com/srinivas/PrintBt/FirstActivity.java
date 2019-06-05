@@ -51,6 +51,7 @@ public class FirstActivity extends Activity implements Runnable {
         setContentView(R.layout.first_bt);
        // e1=(EditText)findViewById(R.id.ttt);
 
+
         mScan = (Button) findViewById(R.id.Scan);
         mScan.setOnClickListener(new View.OnClickListener() {
             public void onClick(View mView) {
@@ -76,7 +77,6 @@ public class FirstActivity extends Activity implements Runnable {
 
 
 
-
         mPrint = (Button) findViewById(R.id.mPrint);
         mPrint.setOnClickListener(new View.OnClickListener() {
             public void onClick(View mView) {
@@ -84,6 +84,7 @@ public class FirstActivity extends Activity implements Runnable {
                 Thread t = new Thread() {
                     public void run() {
                         try {
+
                             OutputStream os = mBluetoothSocket
                                     .getOutputStream();
                             OutputStream os1 = mBluetoothSocket
