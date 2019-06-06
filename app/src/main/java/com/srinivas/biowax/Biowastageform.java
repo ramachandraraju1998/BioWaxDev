@@ -14,6 +14,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
@@ -27,9 +28,12 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -107,6 +111,8 @@ public class Biowastageform extends Activity implements View.OnClickListener,Run
     GPSTracker gps;
     String latitude="0", logiitude="0" +
             "";
+    String sag="";
+    String sri="";
   //  TextView completed_tv;
     // private PeopleTrackerService service;
     ProgressDialog progress;
@@ -165,6 +171,9 @@ Bitmap bitmap=null;
         hcf_authorized_person_name = findViewById(R.id.hcf_authorized_person_name);
         approved_by = findViewById(R.id.approved_by);
         bag_weight_in_hcf = findViewById(R.id.bag_weight_in_hcf);
+      //  bag_weight_in_hcf.setLongClickable(true);
+
+
         is_approval_required = findViewById(R.id.is_approval_required);
         waste_collection_date = findViewById(R.id.waste_collection_date);
         myimage_back = findViewById(R.id.myimage_back);
@@ -184,7 +193,35 @@ no=findViewById(R.id.no);
         cover_color_id.setLongClickable(false);
 
 
-       // file = new File(encodedImage);
+
+        //weight on text change
+
+//        bag_weight_in_hcf.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                if (s != null) {
+//
+//
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//
+//
+//
+//            }
+//        });
+
+
+
+                // file = new File(encodedImage);
 
 
 
@@ -250,6 +287,10 @@ check="yes";
         });
 
     }
+
+
+
+
 
     @Override
     public void onClick(View v) {
@@ -613,7 +654,7 @@ check="yes";
                 .add("bag_weight_in_hcf", bag_weight_in_hcf.getText().toString())
                 .add("longitude", latitude)
                 .add("latitude", logiitude)
-                .add("is_manual_input", "Yes")
+                .add("is_manual_input", sag)
                 .add("hcf_authorized_person_name", hcf_authorized_person_name.getText().toString())
                 .add("driver_id", "1")
                 .add("driver_imei_number", ss.getString("imei",""))
@@ -702,7 +743,8 @@ check="yes";
 
                                                 cover_color_id.setText("");
                                                 bag_weight_in_hcf.setText("");
-                                                hcf_authorized_person_name.setText("");
+                                              //  hcf_authorized_person_name.setText("");
+
 
                                                 String uri = "@drawable/cam";  // where myresource (without the extension) is the file
 
@@ -711,6 +753,7 @@ check="yes";
                                                 //imageview= (ImageView)findViewById(R.id.imageView);
                                                 Drawable res = getResources().getDrawable(imageResource);
                                                 waste_image.setImageDrawable(res);
+                                               // Toast.makeText(Biowastageform.this,sag,Toast.LENGTH_SHORT).show();
                                                 //yes.setChecked(false);
 
                                               //  waste_image.setImageDrawable(R.drawable.cam);
@@ -1294,6 +1337,12 @@ check="yes";
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String formattedDate = df.format(c);
 
+        if(bag_weight_in_hcf.getText().toString().equals(sri)){
+            sag="No";
+        }else {
+            sag = "Yes";
+        }
+
         RequestBody formBody = new FormBody.Builder()
                 .add("route_id", "865687032199968")
                 .add("hcf_id", getIntent().getStringExtra("hcfcode"))
@@ -1547,8 +1596,10 @@ check="yes";
                 DecimalFormat format = new DecimalFormat("#.000");
 //                String numberAsString = String.format ("%.4f", f);
                 f=f/1000;
+                sri=f.toString();
 
-              String s=  format.format(f);
+               sag="No";
+             String s=  format.format(f);
                 bag_weight_in_hcf.setText(s.toString());
 
             }

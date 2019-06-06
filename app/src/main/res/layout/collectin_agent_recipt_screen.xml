@@ -10,27 +10,26 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary">
 
         <ImageView
-            android:id="@+id/history_back"
-            android:layout_width="50dp"
-            android:layout_height="45dp"
+            android:id="@+id/imageback"
+            android:layout_width="65dp"
+            android:layout_height="match_parent"
             android:src="@drawable/back" />
 
         <TextView
-            android:layout_width="357dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginRight="20dp"
+            android:id="@+id/role"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="50dp"
             android:gravity="center"
-            android:text="Hospital Recipts"
             android:textColor="@color/white"
-            android:id="@+id/hspname"
-            android:textSize="23dp"
-            android:textStyle="bold" />
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:text="Hospital Recipts"/>
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"

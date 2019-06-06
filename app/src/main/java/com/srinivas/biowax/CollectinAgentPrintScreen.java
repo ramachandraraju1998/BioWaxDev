@@ -49,18 +49,19 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
-public class CollectinAgentPrintScreen extends AppCompatActivity implements Runnable{
+public class CollectinAgentPrintScreen extends AppCompatActivity implements Runnable,View.OnClickListener {
     ProgressDialog pd;
-    TextView success,due_amt;
+    TextView success, due_amt;
     ImageView mScan;
-    String hcf_id,amt,rid;
-    String ridd,hcf_idd,hcf_name,recNum,recDate,amtReciced,totalamount,balamount,dueamt;
+    String hcf_id, amt, rid;
+    String ridd, hcf_idd, hcf_name, recNum, recDate, amtReciced, totalamount, balamount, dueamt;
     SharedPreferences ss;
-    TextView rcid,hsname,rcnumber,rcdate,amtpaid,balcamt;
+    TextView rcid, hsname, rcnumber, rcdate, amtpaid, balcamt;
     LinearLayout ll;
-    boolean ch=false;
+    boolean ch = false;
     String responseBody1;
     EditText e1;
+    ImageView loaction_back;
 
 
     //blt
@@ -80,92 +81,86 @@ public class CollectinAgentPrintScreen extends AppCompatActivity implements Runn
         setContentView(R.layout.collectin_agent_print_screen);
 
 
+        ss = getSharedPreferences("Login", MODE_PRIVATE);
+        success = findViewById(R.id.success);
+        mScan = findViewById(R.id.printimage);
+        loaction_back = findViewById(R.id.imageback);
+        loaction_back.setOnClickListener(this);
 
-
-
-        ss= getSharedPreferences("Login", MODE_PRIVATE);
-        success=findViewById(R.id.success);
-        mScan=findViewById(R.id.printimage);
 
         pd = new ProgressDialog(CollectinAgentPrintScreen.this);
         pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         pd.setMessage("getting Recipt Data..");
         pd.show();
 
-        ll=findViewById(R.id.ll);
+        ll = findViewById(R.id.ll);
         //rcid=findViewById(R.id.rec_id);
         e1 = (EditText) findViewById(R.id.incdata);
-        hsname=findViewById(R.id.hs_name);
-        rcnumber=findViewById(R.id.rcp_num);
-        rcdate=findViewById(R.id.rcp_date);
-        amtpaid=findViewById(R.id.paid_amt);
-        balcamt=findViewById(R.id.bal_amt);
-        due_amt=findViewById(R.id.due_amt);
+        hsname = findViewById(R.id.hs_name);
+        rcnumber = findViewById(R.id.rcp_num);
+        rcdate = findViewById(R.id.rcp_date);
+        amtpaid = findViewById(R.id.paid_amt);
+        balcamt = findViewById(R.id.bal_amt);
+        due_amt = findViewById(R.id.due_amt);
 
 
-      //  amt=   getIntent().getStringExtra("amt");
-        hcf_id =getIntent().getStringExtra("hs_id");
-        rid =getIntent().getStringExtra("rid");
+        //  amt=   getIntent().getStringExtra("amt");
+        hcf_id = getIntent().getStringExtra("hs_id");
+        rid = getIntent().getStringExtra("rid");
 
-        Toast.makeText(CollectinAgentPrintScreen.this,"rid="+rid,Toast.LENGTH_SHORT).show();
-       // Toast.makeText(CollectinAgentPrintScreen.this,"hid="+hcf_id,Toast.LENGTH_LONG).show();
-
-
-
-        success.setText("successfully paid "+amt+"Rs");
+       // Toast.makeText(CollectinAgentPrintScreen.this, "rid=" + rid, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(CollectinAgentPrintScreen.this,"hid="+hcf_id,Toast.LENGTH_LONG).show();
 
 
-getData();
+        success.setText("successfully paid " + amt + "Rs");
+
+
+        getData();
 
         mScan = (ImageView) findViewById(R.id.printimage);
         mScan.setOnClickListener(new View.OnClickListener() {
             public void onClick(View mView) {
-                if(ch==true){
-                    if(mBluetoothAdapter!=null) {
+                if (ch == true) {
+                    if (mBluetoothAdapter != null) {
                         print();
-                    }else{   scan(); }
-                }else {
+                    } else {
+                        scan();
+                    }
+                } else {
                     scan();
                 }
             }
         });
 
 
-
-
-}
-
+    }
 
 
     private void scan() {
 
 
-            mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-            if (mBluetoothAdapter == null) {
-                Toast.makeText(CollectinAgentPrintScreen.this, "Message1", Toast.LENGTH_SHORT).show();
+        if (mBluetoothAdapter == null) {
+            Toast.makeText(CollectinAgentPrintScreen.this, "Message1", Toast.LENGTH_SHORT).show();
+        } else {
+            if (!mBluetoothAdapter.isEnabled()) {
+                Intent enableBtIntent = new Intent(
+                        BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent,
+                        REQUEST_ENABLE_BT);
             } else {
-                if (!mBluetoothAdapter.isEnabled()) {
-                    Intent enableBtIntent = new Intent(
-                            BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                    startActivityForResult(enableBtIntent,
-                            REQUEST_ENABLE_BT);
-                }
-                else {
-                    ListPairedDevices();
-                    Intent connectIntent = new Intent(CollectinAgentPrintScreen.this,
-                            DeviceListActivity.class);
-                    //   print();
-                    startActivityForResult(connectIntent,
-                            REQUEST_CONNECT_DEVICE);
+                ListPairedDevices();
+                Intent connectIntent = new Intent(CollectinAgentPrintScreen.this,
+                        DeviceListActivity.class);
+                //   print();
+                startActivityForResult(connectIntent,
+                        REQUEST_CONNECT_DEVICE);
 
-                }
             }
+        }
 
     }
-
-
-
 
 
     @Override
@@ -174,8 +169,8 @@ getData();
         super.onDestroy();
         try {
             if (mBluetoothSocket != null)
-                ch=false;
-                mBluetoothSocket.close();
+                ch = false;
+            mBluetoothSocket.close();
         } catch (Exception e) {
             Log.e("Tag", "Exe ", e);
         }
@@ -269,7 +264,7 @@ getData();
         public void handleMessage(Message msg) {
             mBluetoothConnectProgressDialog.dismiss();
             Toast.makeText(CollectinAgentPrintScreen.this, "DeviceConnected", Toast.LENGTH_SHORT).show();
-            ch=true;
+            ch = true;
             print();
         }
     };
@@ -293,7 +288,7 @@ getData();
     }
 
 
-    public static String getCurrentTimeStamp(){
+    public static String getCurrentTimeStamp() {
         try {
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -317,7 +312,7 @@ getData();
                 .header("Accept", "application/json")
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Bearer" + ss.getString("access_token", ""))
-                .url("http://175.101.151.121:8002/api/paymentreceiptprintformobile/"+rid+"/"+hcf_id)
+                .url("http://175.101.151.121:8002/api/paymentreceiptprintformobile/" + rid + "/" + hcf_id)
                 .post(formBody)
                 .build();
 
@@ -345,7 +340,7 @@ getData();
             public void onResponse(okhttp3.Call call, final okhttp3.Response response) throws IOException {
 
 
-               responseBody1 = response.body().string();
+                responseBody1 = response.body().string();
 
                 final JSONObject obj;
 
@@ -358,20 +353,19 @@ getData();
                         JSONObject data = obj.getJSONObject("data");
                         JSONArray ar = data.getJSONArray("receipt_details");
                         JSONObject rs = ar.getJSONObject(0);
-                        ridd=rs.getString("receipt_id");
-                        hcf_idd=rs.getString("hcf_master_id");
-                        hcf_name=rs.getString("facility_name");
-                        recNum=rs.getString("receipt_number");
-                        recDate=rs.getString("receipt_date");
-                        amtReciced=rs.getString("amount_received");
-
+                        ridd = rs.getString("receipt_id");
+                        hcf_idd = rs.getString("hcf_master_id");
+                        hcf_name = rs.getString("facility_name");
+                        recNum = rs.getString("receipt_number");
+                        recDate = rs.getString("receipt_date");
+                        amtReciced = rs.getString("amount_received");
 
 
                         JSONArray inar = data.getJSONArray("invoice_details");
                         JSONObject inob = inar.getJSONObject(0);
 
-                        totalamount=inob.getString("total_amount");
-                        balamount=inob.getString("balance_amount");
+                        totalamount = inob.getString("total_amount");
+                        balamount = inob.getString("balance_amount");
                         //dueamt=inob.getString("total_amount");
 
 
@@ -380,19 +374,18 @@ getData();
                             public void run() {
 
 
-                               // rcid.setText("Receipt-id              :   "+ridd);
-                                hsname.setText("Hospital Name     :   "+hcf_name);
-                                rcnumber.setText("Receipt Number   :   "+recNum);
-                                rcdate.setText("Receipt Date         :   "+recDate);
-                                amtpaid.setText("Amount Paid          :   "+amtReciced+".00");
-                                balcamt.setText("Balance Amount       :   "+balamount+".00");
-                                due_amt.setText("Due Amount               :   "+totalamount+".00");
+                                // rcid.setText("Receipt-id              :   "+ridd);
+                                hsname.setText("Hospital Name     :   " + hcf_name);
+                                rcnumber.setText("Receipt Number   :   " + recNum);
+                                rcdate.setText("Receipt Date         :   " + recDate);
+                                amtpaid.setText("Amount Paid          :   " + amtReciced + ".00");
+                                balcamt.setText("Balance Amount       :   " + balamount + ".00");
+                                due_amt.setText("Due Amount               :   " + totalamount + ".00");
                                 ll.setVisibility(View.VISIBLE);
                                 pd.dismiss();
 
                             }
                         });
-
 
 
                         // getTableDetails(send);
@@ -408,7 +401,6 @@ getData();
             }
         });
     }
-
 
 
     private void print() {
@@ -430,23 +422,20 @@ getData();
                     byte[] command = Utils.decodeBitmap(bmp);
 
 
-
                     os.write(command);
-                    String BILL ="\n";
-                    BILL = BILL + "Hospital Name  : "+ hcf_name +"\n";
-                    BILL = BILL + "Receipt Number : " + recNum +"\n" + "";
-                    BILL = BILL + "Date   : " + recDate +"\n";
+                    String BILL = "\n";
+                    BILL = BILL + "Hospital Name  : " + hcf_name + "\n";
+                    BILL = BILL + "Receipt Number : " + recNum + "\n" + "";
+                    BILL = BILL + "Date   : " + recDate + "\n";
 
 
-                    BILL = BILL+ "--------------------------------\n";
+                    BILL = BILL + "--------------------------------\n";
 
-                    BILL = BILL +"Due Amount     : "+ totalamount +".00\n";
-                    BILL = BILL +"Amount Paid    : "+ amtReciced +".00\n";
-                    BILL = BILL +"Balance Amount : "+ balamount +".00\n";
+                    BILL = BILL + "Due Amount     : " + totalamount + ".00\n";
+                    BILL = BILL + "Amount Paid    : " + amtReciced + ".00\n";
+                    BILL = BILL + "Balance Amount : " + balamount + ".00\n";
                     BILL = BILL
                             + "--------------------------------\n";
-
-
 
 
 //                            }
@@ -477,7 +466,6 @@ getData();
                     os.write(intToByteArray(n_width));
 
 
-
                 } catch (Exception e) {
                     Log.e("FirstActivity", "Exe ", e);
                 }
@@ -486,10 +474,17 @@ getData();
         t.start();
 
 
-
-
     }
 
 
+    @Override
+    public void onClick(View v) {
 
+        switch (v.getId()) {
+            case R.id.imageback:
+                finish();
+                break;
+
+        }
+    }
 }

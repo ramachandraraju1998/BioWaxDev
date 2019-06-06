@@ -31,6 +31,7 @@ public class CollectinAgentReciptScreen extends AppCompatActivity implements Vie
     CollectionagentAdapter collection_adapter, hospitals_adapter2;
     Handler handler;
     private Runnable mRunnable;
+    ImageView loaction_back;
 
     ProgressDialog pd;
     String id;
@@ -41,13 +42,13 @@ public class CollectinAgentReciptScreen extends AppCompatActivity implements Vie
         setContentView(R.layout.collectin_agent_recipt_screen);
 
 //        getActionBar().hide();
-        id=getIntent().getStringExtra("id");
-        Toast.makeText(CollectinAgentReciptScreen.this,id.toString(),Toast.LENGTH_SHORT).show();
-        history_back = findViewById(R.id.history_back);
-        history_back.setOnClickListener(this);
+        id = getIntent().getStringExtra("id");
+        Toast.makeText(CollectinAgentReciptScreen.this, id.toString(), Toast.LENGTH_SHORT).show();
+
         hospital_rec = findViewById(R.id.hospitalb_rv);
         hospital_rec.setLayoutManager(new LinearLayoutManager(this));
-
+        loaction_back = findViewById(R.id.imageback);
+        loaction_back.setOnClickListener(this);
 
 
         Collections = new ArrayList<Collection>();
@@ -61,11 +62,11 @@ public class CollectinAgentReciptScreen extends AppCompatActivity implements Vie
             pd.show();
 
         } else {
-            Toast.makeText(getBaseContext(),"Please check your internet connection",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
             //  getcheckins_from_local();
         }
 
-    getRecipts();
+        getRecipts();
 
     }
 
@@ -80,7 +81,7 @@ public class CollectinAgentReciptScreen extends AppCompatActivity implements Vie
                 .header("Accept", "application/json")
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Bearer" + ss.getString("access_token", ""))
-                .url("http://175.101.151.121:8002/api/receiptslistofhospital/"+id)
+                .url("http://175.101.151.121:8002/api/receiptslistofhospital/" + id)
                 .get()
                 .build();
 
@@ -113,9 +114,9 @@ public class CollectinAgentReciptScreen extends AppCompatActivity implements Vie
                             JSONArray jsonArray = data.getJSONArray("receipt_list");
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject res = jsonArray.getJSONObject(i);
-                                Collections.add(new Collection(res.getString("receipt_number"),
+                                Collections.add(new Collection(res.getInt("id"), res.getString("receipt_number"),
                                         res.getString("receipt_date"))
-                                      );
+                                );
                             }
 
                             runOnUiThread(new Runnable() {
@@ -124,7 +125,7 @@ public class CollectinAgentReciptScreen extends AppCompatActivity implements Vie
                                 public void run() {
 
 
-                                    collection_adapter = new CollectionagentAdapter(Collections,id,R.layout.collectionagentreciptsingle,getApplicationContext());
+                                    collection_adapter = new CollectionagentAdapter(Collections, id, R.layout.collectionagentreciptsingle, getApplicationContext());
                                     hospital_rec.setAdapter(collection_adapter);
                                     // Stuff that updates the UI
 //                                    transaction_adapter = new Transaction_Adapter(Transactionss, R.layout.transaction_single, getApplicationContext());
@@ -150,5 +151,12 @@ public class CollectinAgentReciptScreen extends AppCompatActivity implements Vie
     @Override
     public void onClick(View v) {
 
+        switch (v.getId()) {
+            case R.id.imageback:
+                finish();
+                break;
+
+
+        }
     }
 }

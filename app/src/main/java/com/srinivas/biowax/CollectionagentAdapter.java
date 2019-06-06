@@ -39,7 +39,7 @@ public class CollectionagentAdapter extends RecyclerView.Adapter<Collectionagent
 
     @Override
     public void onBindViewHolder(@NonNull Hospital hospital, final int i) {
-        final int ii=i;
+
 
         hospital.rec_num.setText("  "+Collections.get(i).getReceipt_number());
         hospital.time.setText("  " +Collections.get(i).getReceipt_date());
@@ -47,9 +47,11 @@ public class CollectionagentAdapter extends RecyclerView.Adapter<Collectionagent
         hospital.hostpital_ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int data=Collections.get(i).getId();
+                String ss= String.valueOf(data);
                 Intent biowaxform = new Intent(context, CollectinAgentPrintScreen.class);
                 biowaxform.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                biowaxform.putExtra("rid",Collections.get(ii).getReceipt_number());
+                biowaxform.putExtra("rid",ss);
                 biowaxform.putExtra("hs_id",id);
                 context.startActivity(biowaxform);
             }

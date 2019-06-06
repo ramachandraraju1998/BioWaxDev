@@ -37,110 +37,110 @@
         android:alpha=".7"
         android:src="@drawable/agent" />
 
-    <!--<android.support.design.widget.TextInputLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginLeft="40dp"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--android:layout_marginRight="40dp"-->
-        <!--android:textColorHint="@color/black">-->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:textColorHint="@color/black">
 
-        <!--<EditText-->
-            <!--android:id="@+id/employeecode"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:background="@drawable/border"-->
-            <!--android:hint="Employee Code"-->
-            <!--android:inputType="text"-->
-            <!--android:paddingLeft="10dp"-->
-            <!--android:textColor="@color/black"-->
-            <!--android:textColorHint="@color/black"-->
-            <!--android:focusable="false"/>-->
-    <!--</android.support.design.widget.TextInputLayout>-->
+        <EditText
+            android:id="@+id/employeecode"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/border"
+            android:hint="Employee Code"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:focusable="false"/>
+    </android.support.design.widget.TextInputLayout>
 
-    <!--<android.support.design.widget.TextInputLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginLeft="40dp"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--android:layout_marginRight="40dp"-->
-        <!--android:textColorHint="@color/black">-->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:textColorHint="@color/black">
 
-        <!--<EditText-->
-            <!--android:id="@+id/employeename"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:background="@drawable/border"-->
-            <!--android:hint="Agent Name"-->
-            <!--android:inputType="text"-->
-            <!--android:paddingLeft="10dp"-->
-            <!--android:textColor="@color/black"-->
-            <!--android:textColorHint="@color/black"-->
-            <!--android:focusable="false"/>-->
-    <!--</android.support.design.widget.TextInputLayout>-->
+        <EditText
+            android:id="@+id/employeename"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/border"
+            android:hint="Agent Name"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:focusable="false"/>
+    </android.support.design.widget.TextInputLayout>
 
-    <!--<android.support.design.widget.TextInputLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginLeft="40dp"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--android:layout_marginRight="40dp"-->
-        <!--android:textColorHint="@color/black">-->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:textColorHint="@color/black">
 
-        <!--<EditText-->
-            <!--android:id="@+id/employephone"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:background="@drawable/border"-->
-            <!--android:hint="Mobile Number"-->
-            <!--android:inputType="text"-->
-            <!--android:paddingLeft="10dp"-->
-            <!--android:textColor="@color/black"-->
-            <!--android:textColorHint="@color/black"-->
-            <!--android:focusable="false"/>-->
-    <!--</android.support.design.widget.TextInputLayout>-->
+        <EditText
+            android:id="@+id/employephone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/border"
+            android:hint="Mobile Number"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:focusable="false"/>
+    </android.support.design.widget.TextInputLayout>
 
-    <!--<android.support.design.widget.TextInputLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginLeft="40dp"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--android:layout_marginRight="40dp"-->
-        <!--android:textColorHint="@color/black">-->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:textColorHint="@color/black">
 
-        <!--<EditText-->
-            <!--android:id="@+id/email_id"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:background="@drawable/border"-->
-            <!--android:hint="Email ID"-->
-            <!--android:inputType="text"-->
-            <!--android:paddingLeft="10dp"-->
-            <!--android:textColor="@color/black"-->
-            <!--android:textColorHint="@color/black"-->
-            <!--android:focusable="false"/>-->
-    <!--</android.support.design.widget.TextInputLayout>-->
+        <EditText
+            android:id="@+id/email_id"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/border"
+            android:hint="Email ID"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:focusable="false"/>
+    </android.support.design.widget.TextInputLayout>
 
-    <!--<android.support.design.widget.TextInputLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginLeft="40dp"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--android:layout_marginRight="40dp"-->
-        <!--android:textColorHint="@color/black">-->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:textColorHint="@color/black">
 
-        <!--<EditText-->
-            <!--android:id="@+id/rootname"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:background="@drawable/border"-->
-            <!--android:hint="Route Direction "-->
-            <!--android:inputType="text"-->
-            <!--android:paddingLeft="10dp"-->
-            <!--android:text=""-->
-            <!--android:textColor="@color/black"-->
-            <!--android:textColorHint="@color/black"-->
-            <!--android:focusable="false"/>-->
-    <!--</android.support.design.widget.TextInputLayout>-->
+        <EditText
+            android:id="@+id/rootname"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/border"
+            android:hint="Route Direction "
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:text=""
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:focusable="false"/>
+    </android.support.design.widget.TextInputLayout>
 
 </LinearLayout>

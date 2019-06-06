@@ -254,7 +254,9 @@
                     android:textColor="@color/black"
                     android:textColorHighlight="@color/black"
                     android:textColorHint="@color/black"
-                    android:textColorLink="@color/black" />
+                    android:textColorLink="@color/black"
+                    android:inputType="numberDecimal|numberSigned"
+                    />
 
             </android.support.design.widget.TextInputLayout>
                 <Button
