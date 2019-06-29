@@ -46,7 +46,7 @@ public class GarbageInvoices extends Activity implements View.OnClickListener {
         hospitalb_rv.setLayoutManager(new LinearLayoutManager(this));
         longitude_tv = findViewById(R.id.longitude_tv);
         latitude_tv = findViewById(R.id.latitude_tv);
-back=findViewById(R.id.back);
+        back=findViewById(R.id.back);
         invoices = new ArrayList<Invoice>();
         invoicesadapter = new Invoices_Adapter(invoices, R.layout.invoices_single, getApplicationContext());
         hospitalb_rv.setAdapter(invoicesadapter);

@@ -292,15 +292,16 @@ public class GarbageCollection extends Activity implements View.OnClickListener 
                                 JSONObject routes_master = res.getJSONObject("routes_master");
 
                                 JSONObject hos = res.getJSONObject("hcf_master");
-                                checkins.add(new Hospitals(hos.getString("id"),hos.getString("facility_name"),
-                                        priority,
-                                        Double.valueOf(hos.getString("hcf_longitude")),
-                                        Double.valueOf(hos.getString("hcf_lattitudue"))
-                                        , hos.getString("hcf_address"), routes_master.getString("route_name"),
-                                        hos.getString("contact_number")));
+                                if(res.getString("hcf_master")!="null") {
+                                    checkins.add(new Hospitals(hos.getString("id"), hos.getString("facility_name"),
+                                            priority,
+                                            Double.valueOf(hos.getString("hcf_longitude")),
+                                            Double.valueOf(hos.getString("hcf_lattitudue"))
+                                            , hos.getString("hcf_address"), routes_master.getString("route_name"),
+                                            hos.getString("contact_number")));
 
-                                System.out.println("dadi see here "+hos.getString("contact_number"));
-
+                                    System.out.println("dadi see here " + hos.getString("contact_number"));
+                                }
                             }pd.dismiss();
                             
                             runOnUiThread(new Runnable() {

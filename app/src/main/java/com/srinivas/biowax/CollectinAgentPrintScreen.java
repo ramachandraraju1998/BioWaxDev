@@ -207,7 +207,7 @@ public class CollectinAgentPrintScreen extends AppCompatActivity implements Runn
                     Thread mBlutoothConnectThread = new Thread(this);
                     mBlutoothConnectThread.start();
                     // pairToDevice(mBluetoothDevice); This method is replaced by
-                    // progress dialog with thread
+                    // progress dialog with threadspinner1
                 }
                 break;
 
